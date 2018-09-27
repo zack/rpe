@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>RPE Calculator</title>
+        <meta name="description" content="RPE calculator for powerlifting" />
+        <link rel="stylesheet" type="text/css" href="main.css" media="screen" />
+        <meta name="viewport" content="width=device-width" />
+    </head>
+
+    <body>
+        <div id="content">
+            <h1> RPE Calculator </h1>
+
+            <div id="error"> </div>
+
+            <h3> Enter the given weight, RPE, and reps: </h3>
+            <div class="input-row">
+                <label for="given-weight"> Given weight: </label>
+                <input id="given-weight" type="number" class="given" />
+            </div>
+            <div class="input-row">
+                <label for="given-rpe"> Given RPE: </label>
+                <input id="given-rpe" type="number" class="given" />
+            </div>
+            <div class="input-row">
+                <label for="given-reps"> Given reps: </label>
+                <input id="given-reps" type="number" class="given" />
+            </div>
+
+            <h3> Enter the desired RPE and reps: </h3>
+            <div class="input-row">
+                <label for="desired-rpe"> Desired RPE: </label>
+                <input id="desired-rpe" class="desired" disabled />
+            </div>
+            <div class="input-row">
+                <label for="desired-reps"> Desired reps: </label>
+                <input id="desired-reps" class="desired" disabled />
+            </div>
+
+            <h3> The weight for this exercise is: <span id="solved-weight"> ... </span> </h3>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>
+
+
