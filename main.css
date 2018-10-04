@@ -49,6 +49,16 @@ input:disabled {
   background-color: #DEDEDE;
 }
 
-#error {
+.input-row .error {
   color: red;
+  display: none;
+  font-size: 14px;
+}
+
+.input-row.error .error {
+  display: block;
+}
+
+.input-row.error input {
+  border-color: red;
 }
