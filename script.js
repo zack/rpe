@@ -173,15 +173,34 @@ function inputsEventHandler(e) {
 
   document.querySelector("input#desired-reps").disabled = !haveAllGivens;
   document.querySelector("input#desired-rpe").disabled = !haveAllGivens;
-  const desiredWeight = document.querySelector("#solved-weight");
+  const desiredWeightEl = document.querySelector("#solved-weight");
+  const e1RMEl = document.querySelector("#e1RM");
+  const ninetyFivePEl = document.querySelector("#ninetyFiveP");
+  const EightyFivePEl = document.querySelector("#eightyFiveP");
+  const SeventyFivePEl = document.querySelector("#seventyFiveP");
+  const SixtyFivePEl = document.querySelector("#sixtyFiveP");
 
-  if (haveAllGivens && desiredRPE && desiredReps) {
+  if (haveAllGivens) {
     const givenRPEDecimal = RPEs["RPE"][givenRPE]["REPS"][givenReps];
     const estimated1RM = givenWeight / givenRPEDecimal;
-    const desiredRPEDecimal = RPEs["RPE"][desiredRPE]["REPS"][desiredReps];
-    desiredWeight.innerHTML = parseInt(estimated1RM * desiredRPEDecimal);
+
+    e1RMEl.innerHTML = parseInt(estimated1RM);
+    ninetyFivePEl.innerHTML = parseInt(estimated1RM * 0.95);
+    EightyFivePEl.innerHTML = parseInt(estimated1RM * 0.85);
+    SeventyFivePEl.innerHTML = parseInt(estimated1RM * 0.75);
+    SixtyFivePEl.innerHTML = parseInt(estimated1RM * 0.65);
+
+    if (desiredRPE && desiredReps) {
+      const desiredRPEDecimal = RPEs["RPE"][desiredRPE]["REPS"][desiredReps];
+      desiredWeightEl.innerHTML = parseInt(estimated1RM * desiredRPEDecimal);
+    } else {
+      desiredWeightEl.innerHTML = "...";
+    }
   } else {
-    desiredWeight.innerHTML = "";
+    ninetyFivePEl.innerHTML = "...";
+    EightyFivePEl.innerHTML = "..."
+    SeventyFivePEl.innerHTML = "...";
+    SixtyFivePEl.innerHTML = "...";
   }
 }
 
