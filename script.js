@@ -176,9 +176,10 @@ function inputsEventHandler(e) {
   const desiredWeightEl = document.querySelector("#solved-weight");
   const e1RMEl = document.querySelector("#e1RM");
   const ninetyFivePEl = document.querySelector("#ninetyFiveP");
-  const EightyFivePEl = document.querySelector("#eightyFiveP");
-  const SeventyFivePEl = document.querySelector("#seventyFiveP");
-  const SixtyFivePEl = document.querySelector("#sixtyFiveP");
+  const eightyFivePEl = document.querySelector("#eightyFiveP");
+  const eightyPEl = document.querySelector("#eightyP");
+  const seventyFivePEl = document.querySelector("#seventyFiveP");
+  const sixtyFivePEl = document.querySelector("#sixtyFiveP");
 
   if (haveAllGivens) {
     const givenRPEDecimal = RPEs["RPE"][givenRPE]["REPS"][givenReps];
@@ -186,9 +187,10 @@ function inputsEventHandler(e) {
 
     e1RMEl.innerHTML = parseInt(estimated1RM);
     ninetyFivePEl.innerHTML = parseInt(estimated1RM * 0.95);
-    EightyFivePEl.innerHTML = parseInt(estimated1RM * 0.85);
-    SeventyFivePEl.innerHTML = parseInt(estimated1RM * 0.75);
-    SixtyFivePEl.innerHTML = parseInt(estimated1RM * 0.65);
+    eightyFivePEl.innerHTML = parseInt(estimated1RM * 0.85);
+    eightyPEl.innerHTML = parseInt(estimated1RM * 0.8);
+    seventyFivePEl.innerHTML = parseInt(estimated1RM * 0.75);
+    sixtyFivePEl.innerHTML = parseInt(estimated1RM * 0.65);
 
     if (desiredRPE && desiredReps) {
       const desiredRPEDecimal = RPEs["RPE"][desiredRPE]["REPS"][desiredReps];
@@ -198,9 +200,10 @@ function inputsEventHandler(e) {
     }
   } else {
     ninetyFivePEl.innerHTML = "...";
-    EightyFivePEl.innerHTML = "..."
-    SeventyFivePEl.innerHTML = "...";
-    SixtyFivePEl.innerHTML = "...";
+    eightyFivePEl.innerHTML = "..."
+    eightyPEl.innerHTML = "..."
+    seventyFivePEl.innerHTML = "...";
+    sixtyFivePEl.innerHTML = "...";
   }
 }
 
