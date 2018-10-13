@@ -22,7 +22,7 @@
                 <div class="error"></div>
                 <div class="input-container">
                     <label for="given-weight"> Weight </label>
-                    <input id="given-weight" type="number" class="weight" />
+                    <input id="given-weight" type="number" step="0.01" class="weight" />
                 </div>
             </div>
 
@@ -62,16 +62,32 @@
                 </div>
             </div>
 
-            <h3> The weight for this exercise is: <span id="solved-weight"> ... </span> </h3>
-            <h3> Your e1RM for this exercise is: <span id="e1RM"> ... </span> </h3>
-            <h3> * 95% of your e1RM is: <span id="ninetyFiveP"> ... </span> </h3>
-            <h3> * 85% of your e1RM is: <span id="eightyFiveP"> ... </span> </h3>
-            <h3> * 80% of your e1RM is: <span id="eightyP"> ... </span> </h3>
-            <h3> * 75% of your e1RM is: <span id="seventyFiveP"> ... </span> </h3>
-            <h3> * 65% of your e1RM is: <span id="sixtyFiveP"> ... </span> </h3>
+            <div class="results">
+                <h3> Target weight: <span id="solved-weight"> ... </span> </h3>
+                <h3> 100% of e1RM: <span id="e1RM"> ... </span> </h3>
+                <h3> 95% of e1RM: <span id="ninetyFiveP"> ... </span> </h3>
+                <h3> 85% of e1RM: <span id="eightyFiveP"> ... </span> </h3>
+                <h3> 80% of e1RM: <span id="eightyP"> ... </span> </h3>
+                <h3> 75% of e1RM: <span id="seventyFiveP"> ... </span> </h3>
+                <h3> 65% of e1RM: <span id="sixtyFiveP"> ... </span> </h3>
+            </div>
+
+            <div class="options">
+                <label for="rounding" class="rounding"> Rounding: </label>
+                <select id="rounding" class="rounding" name="rounding">
+                    <option value="5">5.0</option>
+                    <option value="2.5">2.5</option>
+                    <option value="1">1.0</option>
+                    <option value="0.01">0.01</option>
+                </select>
+            </div>
 
             <div class="footer">
-                <span><em>© 2018 Zack Youngren | Code on <a href="https://www.github.com/zack/rpe">GitHub</a></em></span>
+                <span>© 2018 Zack Youngren</span>
+                <br>
+                <span>
+                    </em> Code on <a href="https://www.github.com/zack/rpe">GitHub</a> </em>
+                <span/>
             </div>
         </div>
         <script src="script.js"></script>

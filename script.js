@@ -114,17 +114,11 @@ function validateReps(inputRow, errors) {
   }
 }
 
-function sanitizeInput(input) {
-  input.value = input.value.replace(/\D/g, "");
-}
-
 function sanitizeAndGetInputErrors() {
   const errors = [];
   const inputRows = document.querySelectorAll(".input-row");
   const inputRowsArr = [...inputRows];
   inputRowsArr.forEach(function(inputRow) {
-    sanitizeInput(inputRow.querySelector("input"));
-
     if (inputRow.className.indexOf("weight") > 0) {
       validateWeight(inputRow, errors);
     } else if (inputRow.className.indexOf("rpe") > 0) {
@@ -154,7 +148,18 @@ function displayErrors(errors) {
   });
 }
 
-function inputsEventHandler(e) {
+function roundToFloat(value, round) {
+  var result = Math.round(value / round) * round;
+  if (round % 1 === 0) {
+    return result.toFixed(0);
+  } else if (round % 0.5 === 0) {
+    return result.toFixed(1);
+  } else {
+    return result.toFixed(2);
+  }
+}
+
+function inputsEventHandler() {
   const desiredRPE = document.querySelector("input#desired-rpe").value;
   const desiredReps = document.querySelector("input#desired-reps").value;
   const givenRPE = document.querySelector("input#given-rpe").value;
@@ -185,16 +190,20 @@ function inputsEventHandler(e) {
     const givenRPEDecimal = RPEs["RPE"][givenRPE]["REPS"][givenReps];
     const estimated1RM = givenWeight / givenRPEDecimal;
 
-    e1RMEl.innerHTML = parseInt(estimated1RM);
-    ninetyFivePEl.innerHTML = parseInt(estimated1RM * 0.95);
-    eightyFivePEl.innerHTML = parseInt(estimated1RM * 0.85);
-    eightyPEl.innerHTML = parseInt(estimated1RM * 0.8);
-    seventyFivePEl.innerHTML = parseInt(estimated1RM * 0.75);
-    sixtyFivePEl.innerHTML = parseInt(estimated1RM * 0.65);
+    const roundingValue = Number.parseFloat(document.querySelector("select#rounding").value);
+
+    e1RMEl.innerHTML = roundToFloat(estimated1RM, roundingValue);
+    ninetyFivePEl.innerHTML = roundToFloat(estimated1RM * 0.95, roundingValue);
+    eightyFivePEl.innerHTML = roundToFloat(estimated1RM * 0.85, roundingValue);
+    eightyPEl.innerHTML = roundToFloat(estimated1RM * 0.8, roundingValue);
+    seventyFivePEl.innerHTML = roundToFloat(estimated1RM * 0.75, roundingValue);
+    sixtyFivePEl.innerHTML = roundToFloat(estimated1RM * 0.65, roundingValue);
 
     if (desiredRPE && desiredReps) {
       const desiredRPEDecimal = RPEs["RPE"][desiredRPE]["REPS"][desiredReps];
-      desiredWeightEl.innerHTML = parseInt(estimated1RM * desiredRPEDecimal);
+      desiredWeightEl.innerHTML = roundToFloat(
+        parseInt(estimated1RM * desiredRPEDecimal), roundingValue
+      );
     } else {
       desiredWeightEl.innerHTML = "...";
     }
@@ -210,5 +219,7 @@ function inputsEventHandler(e) {
 const inputs = document.querySelectorAll("input");
 const inputsArr = [...inputs];
 inputsArr.forEach(function(input) {
-  input.addEventListener("input", e => inputsEventHandler(e), false);
+  input.addEventListener("input", e => inputsEventHandler(), false);
 });
+const roundingSelect = document.querySelector("select#rounding");
+roundingSelect.addEventListener("change", e => inputsEventHandler(), false);
