@@ -108,6 +108,7 @@ input {
 }
 
 .input-row .error {
+  border-top: 2px solid #CCCCCC;
   color: red;
   display: none;
   font-size: 14px;
@@ -118,5 +119,5 @@ input {
 }
 
 .input-row.error input {
-  border-color: red;
+  background-color: #FFACAC;
 }
