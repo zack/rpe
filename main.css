@@ -7,7 +7,7 @@ body {
   background-color: #FEFEFE;
   color: #454545;
   font-family: "HelveticaNeue-CondensedBold", "Helvetica Neue", "Arial Narrow", Arial, sans-serif;
-  font-size: 14px;
+  font-size: 20px;
 }
 
 body {
@@ -24,11 +24,37 @@ body {
 }
 
 .header {
-  background-color: #CECECE;
+  background-color: #BBBBBB;
   border-bottom: 3px solid #5E5E5E;
   padding: 20px 0 20px 0;
   text-align: center;
   width: 100%;
+}
+
+.results {
+  margin: 5px;
+}
+
+.options {
+  background-color: #CECECE;
+  border-top: 3px solid #5E5E5E;
+  padding: 5px 0;
+  text-align: center;
+}
+
+.options label.rounding {
+  background: none;
+  border: none;
+  line-height: 30px;
+  line-height: 40px;
+  width: unset;
+}
+
+.options select.rounding {
+  font-size: 20px;
+  height: 40px;
+  margin: 0;
+  padding: 0;
 }
 
 .footer {
@@ -60,6 +86,12 @@ h1, h3 {
   position: relative;
 }
 
+/* For Firefox */
+input[type='number'] {
+  -moz-appearance:textfield;
+}
+
+/* Webkit browsers like Safari and Chrome */
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -70,7 +102,6 @@ label {
   background-color: #EEEEEE;
   border-top: 2px solid #CCCCCC;
   display: inline-block;
-  font-size: 15px;
   font-weight: bold;
   height: 40px;
   line-height: 40px;
@@ -92,6 +123,7 @@ input {
   border-bottom: 0;
   border-right: 0;
   color: #454545;
+  font-size: 20px;
   font-weight: bold;
   height: 40px;
   line-height: 18px;
@@ -111,7 +143,7 @@ input {
   border-top: 2px solid #CCCCCC;
   color: red;
   display: none;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .input-row.error .error {
