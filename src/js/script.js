@@ -1,5 +1,5 @@
 (function() {
-  const RPEs = {
+  var RPEs = {
     RPE: {
       "10": {
         REPS: {
@@ -85,16 +85,16 @@
   };
 
   function validateWeight(inputRow, errors) {
-    const input = inputRow.querySelector("input");
-    const inputValue = input.value;
+    var input = inputRow.querySelector("input");
+    var inputValue = input.value;
     if (inputValue.length > 0 && inputValue <= 0) {
       errors.push([input.getAttribute("id"), "Weight must be above 0"]);
     }
   }
 
   function validateRPE(inputRow, errors) {
-    const input = inputRow.querySelector("input");
-    const inputValue = input.value;
+    var input = inputRow.querySelector("input");
+    var inputValue = input.value;
     if (inputValue.length > 0 && inputValue < 6) {
       errors.push([input.getAttribute("id"), "RPE must be 6 or above"]);
     } else if (inputValue.length > 0 && inputValue > 10) {
@@ -103,8 +103,8 @@
   }
 
   function validateReps(inputRow, errors) {
-    const input = inputRow.querySelector("input");
-    const inputValue = input.value;
+    var input = inputRow.querySelector("input");
+    var inputValue = input.value;
     if (inputValue.length > 0 && inputValue <= 0) {
       errors.push([input.getAttribute("id"), "Reps must be above 0"]);
     } else if (inputValue.length > 0 && inputValue > 12) {
@@ -116,9 +116,8 @@
   }
 
   function sanitizeAndGetInputErrors() {
-    const errors = [];
-    const inputRows = document.querySelectorAll(".input-row");
-    const inputRowsArr = [...inputRows];
+    var errors = [];
+    var inputRowsArr = [].slice.call(document.querySelectorAll(".input-row"));
     inputRowsArr.forEach(function(inputRow) {
       if (inputRow.className.indexOf("weight") > 0) {
         validateWeight(inputRow, errors);
@@ -133,19 +132,20 @@
   }
 
   function clearAllErrors() {
-    const inputRows = document.querySelectorAll(".input-row");
-    const inputRowArr = [...inputRows];
-    inputRowArr.forEach(function(inputRow) {
+    var inputRowsArr = [].slice.call(document.querySelectorAll(".input-row"));
+    inputRowsArr.forEach(function(inputRow) {
       inputRow.classList.remove("error");
       inputRow.querySelector(".error").innerHTML = "";
     });
   }
 
   function displayErrors(errors) {
-    errors.forEach(function([divName, errorText]) {
-      const inputRow = `.input-row.${divName}`;
+    errors.forEach(function(arr) {
+      var divName = arr[0];
+      var errorText = arr[1];
+      var inputRow = ".input-row." + divName;
       document.querySelector(inputRow).classList.add("error");
-      document.querySelector(`${inputRow} .error`).innerHTML = errorText;
+      document.querySelector(inputRow + " .error").innerHTML = errorText;
     });
   }
 
@@ -161,37 +161,37 @@
   }
 
   function inputsEventHandler() {
-    const desiredRPE = document.querySelector("input#desired-rpe").value;
-    const desiredReps = document.querySelector("input#desired-reps").value;
-    const givenRPE = document.querySelector("input#given-rpe").value;
-    const givenReps = document.querySelector("input#given-reps").value;
-    const givenWeight = document.querySelector("input#given-weight").value;
+    var desiredRPE = document.querySelector("input#desired-rpe").value;
+    var desiredReps = document.querySelector("input#desired-reps").value;
+    var givenRPE = document.querySelector("input#given-rpe").value;
+    var givenReps = document.querySelector("input#given-reps").value;
+    var givenWeight = document.querySelector("input#given-weight").value;
 
     clearAllErrors();
-    const errors = sanitizeAndGetInputErrors();
+    var errors = sanitizeAndGetInputErrors();
 
     if (errors.length > 0) {
       displayErrors(errors);
       return false;
     }
 
-    const haveAllGivens = givenWeight && givenRPE && givenReps;
+    var haveAllGivens = givenWeight && givenRPE && givenReps;
 
     document.querySelector("input#desired-reps").disabled = !haveAllGivens;
     document.querySelector("input#desired-rpe").disabled = !haveAllGivens;
-    const desiredWeightEl = document.querySelector("#solved-weight");
-    const e1RMEl = document.querySelector("#e1RM");
-    const ninetyFivePEl = document.querySelector("#ninetyFiveP");
-    const eightyFivePEl = document.querySelector("#eightyFiveP");
-    const eightyPEl = document.querySelector("#eightyP");
-    const seventyFivePEl = document.querySelector("#seventyFiveP");
-    const sixtyFivePEl = document.querySelector("#sixtyFiveP");
+    var desiredWeightEl = document.querySelector("#solved-weight");
+    var e1RMEl = document.querySelector("#e1RM");
+    var ninetyFivePEl = document.querySelector("#ninetyFiveP");
+    var eightyFivePEl = document.querySelector("#eightyFiveP");
+    var eightyPEl = document.querySelector("#eightyP");
+    var seventyFivePEl = document.querySelector("#seventyFiveP");
+    var sixtyFivePEl = document.querySelector("#sixtyFiveP");
 
     if (haveAllGivens) {
-      const givenRPEDecimal = RPEs["RPE"][givenRPE]["REPS"][givenReps];
-      const estimated1RM = givenWeight / givenRPEDecimal;
+      var givenRPEDecimal = RPEs["RPE"][givenRPE]["REPS"][givenReps];
+      var estimated1RM = givenWeight / givenRPEDecimal;
 
-      const roundingValue = Number.parseFloat(document.querySelector("select#rounding").value);
+      var roundingValue = Number.parseFloat(document.querySelector("select#rounding").value);
 
       e1RMEl.innerHTML = roundToFloat(estimated1RM, roundingValue);
       ninetyFivePEl.innerHTML = roundToFloat(estimated1RM * 0.95, roundingValue);
@@ -201,7 +201,7 @@
       sixtyFivePEl.innerHTML = roundToFloat(estimated1RM * 0.65, roundingValue);
 
       if (desiredRPE && desiredReps) {
-        const desiredRPEDecimal = RPEs["RPE"][desiredRPE]["REPS"][desiredReps];
+        var desiredRPEDecimal = RPEs["RPE"][desiredRPE]["REPS"][desiredReps];
         desiredWeightEl.innerHTML = roundToFloat(
           parseInt(estimated1RM * desiredRPEDecimal), roundingValue
         );
@@ -217,11 +217,10 @@
     }
   }
 
-  const inputs = document.querySelectorAll("input");
-  const inputsArr = [...inputs];
+  var inputsArr = [].slice.call(document.querySelectorAll("input"));
   inputsArr.forEach(function(input) {
-    input.addEventListener("input", e => inputsEventHandler(), false);
+    input.addEventListener("input", inputsEventHandler, false);
   });
-  const roundingSelect = document.querySelector("select#rounding");
-  roundingSelect.addEventListener("change", e => inputsEventHandler(), false);
+  var roundingSelect = document.querySelector("select#rounding");
+  roundingSelect.addEventListener("change", inputsEventHandler, false);
 })();
