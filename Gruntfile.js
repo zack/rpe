@@ -3,6 +3,9 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON('package.json'),
     assets_inline: {
       all: {
+        options: {
+          minify: true
+        },
         files: {
           "./dist/index.html": "./src/index.html"
         }
