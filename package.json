@@ -1,0 +1,18 @@
+{
+  "name": "rpe",
+  "version": "1.0.0",
+  "description": "RPE calculator",
+  "main": "index.html",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zack/rpe.git"
+  },
+  "author": "zack@youngren.io",
+  "license": "MIT",
+  "homepage": "https://rpe.youngren.io/",
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "^1.0.3",
+    "grunt-assets-inline": "^1.1.2"
+  }
+}
