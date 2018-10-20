@@ -1,5 +1,18 @@
 (function() {
-  var RPEs = {
+
+  interface RepValues {
+    [reps: string]: number
+  }
+
+  interface RPEChart {
+    "RPE": {
+      [rpeValue:string]: {
+        "REPS": RepValues
+      }
+    }
+  }
+
+  const RPEs: RPEChart = {
     RPE: {
       "10": {
         REPS: {
@@ -149,7 +162,7 @@
     });
   }
 
-  function roundToFloat(value, round) {
+  function roundToFloat(value: number, round: number): string {
     var result = Math.round(value / round) * round;
     if (round % 1 === 0) {
       return result.toFixed(0);
@@ -161,11 +174,11 @@
   }
 
   function inputsEventHandler() {
-    var desiredRPE = document.querySelector("input#desired-rpe").value;
-    var desiredReps = document.querySelector("input#desired-reps").value;
-    var givenRPE = document.querySelector("input#given-rpe").value;
-    var givenReps = document.querySelector("input#given-reps").value;
-    var givenWeight = document.querySelector("input#given-weight").value;
+    var desiredRPE = document.querySelector<HTMLInputElement>("input#desired-rpe").value;
+    var desiredReps = document.querySelector<HTMLInputElement>("input#desired-reps").value;
+    var givenRPE = document.querySelector<HTMLInputElement>("input#given-rpe").value;
+    var givenReps = document.querySelector<HTMLInputElement>("input#given-reps").value;
+    var givenWeight: number = parseFloat(document.querySelector<HTMLInputElement>("input#given-weight").value);
 
     clearAllErrors();
     var errors = sanitizeAndGetInputErrors();
@@ -177,8 +190,8 @@
 
     var haveAllGivens = givenWeight && givenRPE && givenReps;
 
-    document.querySelector("input#desired-reps").disabled = !haveAllGivens;
-    document.querySelector("input#desired-rpe").disabled = !haveAllGivens;
+    document.querySelector<HTMLInputElement>("input#desired-reps").disabled = !haveAllGivens;
+    document.querySelector<HTMLInputElement>("input#desired-rpe").disabled = !haveAllGivens;
     var desiredWeightEl = document.querySelector("#solved-weight");
     var e1RMEl = document.querySelector("#e1RM");
     var ninetyFivePEl = document.querySelector("#ninetyFiveP");
@@ -191,7 +204,7 @@
       var givenRPEDecimal = RPEs["RPE"][givenRPE]["REPS"][givenReps];
       var estimated1RM = givenWeight / givenRPEDecimal;
 
-      var roundingValue = Number.parseFloat(document.querySelector("select#rounding").value);
+      var roundingValue = Number.parseFloat(document.querySelector<HTMLInputElement>("select#rounding").value);
 
       e1RMEl.innerHTML = roundToFloat(estimated1RM, roundingValue);
       ninetyFivePEl.innerHTML = roundToFloat(estimated1RM * 0.95, roundingValue);
@@ -201,17 +214,17 @@
       sixtyFivePEl.innerHTML = roundToFloat(estimated1RM * 0.65, roundingValue);
 
       if (desiredRPE && desiredReps) {
-        var desiredRPEDecimal = RPEs["RPE"][desiredRPE]["REPS"][desiredReps];
+        const desiredRPEDecimal: number = RPEs["RPE"][desiredRPE]["REPS"][desiredReps];
         desiredWeightEl.innerHTML = roundToFloat(
-          parseInt(estimated1RM * desiredRPEDecimal), roundingValue
+          Math.floor(estimated1RM * desiredRPEDecimal), roundingValue
         );
       } else {
         desiredWeightEl.innerHTML = "...";
       }
     } else {
       ninetyFivePEl.innerHTML = "...";
-      eightyFivePEl.innerHTML = "..."
-      eightyPEl.innerHTML = "..."
+      eightyFivePEl.innerHTML = "...";
+      eightyPEl.innerHTML = "...";
       seventyFivePEl.innerHTML = "...";
       sixtyFivePEl.innerHTML = "...";
     }

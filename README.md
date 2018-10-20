@@ -1,7 +1,24 @@
 Just a simple RPE calculator. Uses custom RPE values set by the coaches at my
 gym, so they may be a little different than yours.
 
-MIT License
+## To Build
+Clone the repo.
+
+### Install
+install the project's dependencies:
+> npm install
+
+
+### Build
+build the project.
+> npm run build
+
+### Run
+by opening
+> %ProjectRoot%/dist/index.html
+
+## MIT License
+
 
 Copyright (c) 2018 Zack Youngren
 
