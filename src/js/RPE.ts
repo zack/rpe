@@ -35,7 +35,7 @@ export type RepCount = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10
 
 export class RPE {
 
-    static values = new Map<EffortLevel, Map<RepCount, number>>([
+    private static values = new Map<EffortLevel, Map<RepCount, number>>([
         [
             <EffortLevel> "10",
             new Map<RepCount, number>([
@@ -123,10 +123,20 @@ export class RPE {
         ]
     ]);
 
+    /**
+     * Returns the RPE "factor" used to calculate a 1-Rep-Max (1RM) with the given level of effort and number of reps
+     * */
     static getFactor(effort: EffortLevel | string, reps: RepCount | string): number {
         return RPE.values.get(effort as EffortLevel).get(reps as RepCount);
     }
 
+    /**
+     * Calculate the 1-rep-max equivalent based on the lift data
+     *
+     * @param weight weight lifted
+     * @param effort the {@link EffortLevel} based on the RPE scale
+     * @param reps the {@link RepCount} performed in the lift
+     * */
     static get1RM(weight: number, effort: EffortLevel | string, reps: RepCount | string): number {
         return weight / RPE.getFactor(effort, reps);
     }
