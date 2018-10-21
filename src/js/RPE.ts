@@ -127,7 +127,22 @@ export class RPE {
      * Returns the RPE "factor" used to calculate a 1-Rep-Max (1RM) with the given level of effort and number of reps
      * */
     static getFactor(effort: EffortLevel | string, reps: RepCount | string): number {
-        return RPE.values.get(effort as EffortLevel).get(reps as RepCount);
+
+        const rpe = effort as EffortLevel;
+
+        if(!RPE.values.has(rpe)){
+            throw new Error(`RPE value not recognized: '${rpe}'`)
+        }
+
+        const repValues = RPE.values.get(rpe);
+
+        const repCount = reps as RepCount;
+
+        if(!repValues.has(repCount)){
+            throw new Error(`'${repCount}' is an invalid number of reps (only 1 - 12 supported).`)
+        }
+
+        return repValues.get(repCount);
     }
 
     /**
