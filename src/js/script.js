@@ -181,39 +181,26 @@
     document.querySelector("input#desired-rpe").disabled = !haveAllGivens;
     var desiredWeightEl = document.querySelector("#solved-weight");
     var e1RMEl = document.querySelector("#e1RM");
-    var ninetyFivePEl = document.querySelector("#ninetyFiveP");
-    var eightyFivePEl = document.querySelector("#eightyFiveP");
-    var eightyPEl = document.querySelector("#eightyP");
-    var seventyFivePEl = document.querySelector("#seventyFiveP");
-    var sixtyFivePEl = document.querySelector("#sixtyFiveP");
 
     if (haveAllGivens) {
       var givenRPEDecimal = RPEs["RPE"][givenRPE]["REPS"][givenReps];
       var estimated1RM = givenWeight / givenRPEDecimal;
 
-      var roundingValue = Number.parseFloat(document.querySelector("select#rounding").value);
+      var roundingValue = Number.parseFloat(
+        document.querySelector("select#rounding").value
+      );
 
       e1RMEl.innerHTML = roundToFloat(estimated1RM, roundingValue);
-      ninetyFivePEl.innerHTML = roundToFloat(estimated1RM * 0.95, roundingValue);
-      eightyFivePEl.innerHTML = roundToFloat(estimated1RM * 0.85, roundingValue);
-      eightyPEl.innerHTML = roundToFloat(estimated1RM * 0.8, roundingValue);
-      seventyFivePEl.innerHTML = roundToFloat(estimated1RM * 0.75, roundingValue);
-      sixtyFivePEl.innerHTML = roundToFloat(estimated1RM * 0.65, roundingValue);
 
       if (desiredRPE && desiredReps) {
         var desiredRPEDecimal = RPEs["RPE"][desiredRPE]["REPS"][desiredReps];
         desiredWeightEl.innerHTML = roundToFloat(
-          parseInt(estimated1RM * desiredRPEDecimal), roundingValue
+          parseInt(estimated1RM * desiredRPEDecimal),
+          roundingValue
         );
       } else {
         desiredWeightEl.innerHTML = "...";
       }
-    } else {
-      ninetyFivePEl.innerHTML = "...";
-      eightyFivePEl.innerHTML = "..."
-      eightyPEl.innerHTML = "..."
-      seventyFivePEl.innerHTML = "...";
-      sixtyFivePEl.innerHTML = "...";
     }
   }
 
