@@ -1,33 +1,86 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="header">
+        <h1> RPE Calculator </h1>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+
+      <div className="subheader">
+        <h2> Starting Values</h2>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+
+      <div className="input-row">
+        <div className="input-container">
+          <label htmlFor="starting-weight"> Weight </label>
+          <input
+            className="text"
+            id="starting-weight"
+            inputMode="numeric"
+            pattern="[0-9\.]*"
+          />
+        </div>
+      </div>
+
+      <div className="input-row">
+        <div className="input-container">
+          <label htmlFor="starting-reps"> Reps </label>
+          <input
+            className="text"
+            id="starting-reps"
+            inputMode="numeric"
+            pattern="[0-9]*"
+          />
+        </div>
+      </div>
+
+      <div className="input-row border-bottom">
+        <div className="input-container">
+          <label htmlFor="starting-RPE"> RPE </label>
+          <input
+            className="text"
+            id="starting-rpe"
+            inputMode="numeric"
+            pattern="[0-9\.]*"
+          />
+        </div>
+      </div>
+
+      <div className="subheader">
+        <h2> Target Values</h2>
+      </div>
+
+      <div className="input-row">
+        <div className="input-container">
+          <label htmlFor="target-reps"> Reps </label>
+          <input
+            className="text"
+            id="target-reps"
+            inputMode="numeric"
+            pattern="[0-9]*"
+          />
+        </div>
+      </div>
+
+      <div className="input-row border-bottom">
+        <div className="input-container">
+          <label htmlFor="target-RPE"> RPE </label>
+          <input
+            className="text"
+            id="target-rpe"
+            inputMode="numeric"
+            pattern="[0-9\.]*"
+          />
+        </div>
+      </div>
+
+      <div className="results">
+        <div> Target weight: ...</div>
+        <div> E1RM: ...</div>
+      </div>
     </>
   )
 }
