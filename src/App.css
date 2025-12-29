@@ -329,13 +329,18 @@ input.e1rm-multiplier {
 }
 
 .input-row .error {
-  border-bottom: 2px solid #CCCCCC;
+  border-top: 2px solid #CCCCCC;
   color: #C00000;
   display: none;
   font-size: 16px;
   font-weight: bold;
   padding: 3px;
   text-align: center;
+}
+
+.input-row.border-bottom .error {
+  border-top: none;
+  border-bottom: 2px solid #CCCCCC;
 }
 
 .input-row.error .error {

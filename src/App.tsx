@@ -82,6 +82,12 @@ function App() {
     && !errors.startingRPE
     && (startingWeightNum / getRPECoefficient(startingReps as RPE, startingRPENum));
 
+  if (e1RM && e1RM < 0) {
+    errors.startingReps = "Reps too high"
+  }
+
+  const showE1RM = !errors.startingReps && e1RM;
+
   const targetWeight =
     e1RM
     && targetReps
@@ -90,6 +96,13 @@ function App() {
     && targetRPENum > 1
     && !errors.targetRPE
     && e1RM * getRPECoefficient(targetReps as RPE, targetRPENum);
+
+  if (showE1RM && targetWeight && targetWeight < 0) {
+    errors.targetReps = "Reps too high"
+  }
+
+  const showTargetWeight = !errors.targetReps && targetWeight;
+
 
   return (
     <>
@@ -191,8 +204,8 @@ function App() {
       </div>
 
       <div className="results">
-        <div> Target weight: { targetWeight ? targetWeight.toFixed(2) : "..." } </div>
-        <div> E1RM: { e1RM ? e1RM.toFixed(2) : "..." } </div>
+        <div> Target weight: { showTargetWeight ? targetWeight.toFixed(2) : "..." } </div>
+        <div> E1RM: { showE1RM ? e1RM.toFixed(2) : "..." } </div>
       </div>
     </>
   )
