@@ -304,7 +304,7 @@ input.text:focus-visible {
   border: 2px solid #2B7FFF;
   border-bottom: none;
   border-right: none;
-  box-shadow: 2px 0px #2B7FFF, 0 2px #2B7FFF;
+  box-shadow: 3px 0px #2B7FFF, 0 2px #2B7FFF, 3px 2px #2B7FFF;
   outline: none;
   z-index: 1;
 }
@@ -325,7 +325,7 @@ input.e1rm-multiplier {
 
 .input-row.border-bottom .input-container input:focus-visible {
   border-bottom: 2px solid #2B7FFF;
-  box-shadow: 2px 0px #2B7FFF;
+  box-shadow: 3px 0px #2B7FFF;
 }
 
 .input-row .error {

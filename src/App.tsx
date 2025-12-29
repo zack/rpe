@@ -110,7 +110,6 @@ function App() {
             id="starting-weight"
             inputMode="numeric"
             onChange={(e) => setStartingWeight(e.target.value.replace(/[^0-9.]/g,""))}
-            pattern="[0-9]*"
             type="text"
             value={startingWeight ? startingWeight : ""}
           />
@@ -128,7 +127,6 @@ function App() {
             id="starting-reps"
             inputMode="numeric"
             onChange={(e) => setStartingReps(Number(e.target.value))}
-            pattern="[0-9]*"
             value={startingReps ? startingReps : ""}
           />
         </div>
@@ -147,7 +145,6 @@ function App() {
             onBlur={() => setStartingRPEFocused(false)}
             onChange={(e) => setStartingRPE(e.target.value.replace(/[^0-9.]/g,""))}
             onFocus={() => setStartingRPEFocused(true)}
-            pattern="[0-9\.]*"
             value={startingRPENum ? startingRPE : ""}
           />
         </div>
@@ -168,7 +165,6 @@ function App() {
             id="target-reps"
             inputMode="numeric"
             onChange={(e) => setTargetReps(Number(e.target.value))}
-            pattern="[0-9]*"
             value={targetReps ? targetReps : ""}
           />
         </div>
@@ -187,7 +183,6 @@ function App() {
             onBlur={() => setTargetRPEFocused(false)}
             onChange={(e) => setTargetRPE(e.target.value)}
             onFocus={() => setTargetRPEFocused(true)}
-            pattern="[0-9\.]*"
             value={targetRPE ? targetRPE : ""}
           />
         </div>
