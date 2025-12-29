@@ -329,11 +329,13 @@ input.e1rm-multiplier {
 }
 
 .input-row .error {
-  border-top: 2px solid #CCCCCC;
-  color: red;
+  border-bottom: 2px solid #CCCCCC;
+  color: #C00000;
   display: none;
   font-size: 16px;
+  font-weight: bold;
   padding: 3px;
+  text-align: center;
 }
 
 .input-row.error .error {
@@ -342,4 +344,5 @@ input.e1rm-multiplier {
 
 .input-row.error input {
   background-color: #FFACAC;
+  box-shadow: inset 2px 2px #C00000, inset -2px -2px #C00000;
 }
