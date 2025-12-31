@@ -21,17 +21,17 @@ const RPE_FUNCTIONS = {
   10: (x: number) => -0.0277*(x-1) + 0.993,
 }
 
-function getPlates(weight: number | false, useCollars: boolean, platesUnit: string) : { plates: number[], actualWeight: number } {
+function getPlates(weight: number | false, usingCollars: boolean, usingKilos: string) : { plates: number[], actualWeight: number } {
   if (!weight) {
     return ({ plates: [], actualWeight: 0 });
   }
 
-  const barWeight = platesUnit === 'Kilos' ? 20 : 45;
-  const collarWeight = useCollars ? (platesUnit === 'Kilos' ? 5 : 11) : 0;
+  const barWeight = usingKilos ? 20 : 45;
+  const collarWeight = usingCollars ? (usingKilos ? 5 : 11) : 0;
   let remainingWeight = weight - barWeight - collarWeight;
   let actualWeight = barWeight + collarWeight;
 
-  const plateSizes = platesUnit === 'Kilos'
+  const plateSizes = usingKilos
     ? [25, 20, 15, 10, 5, 2.5, 1.25, 0.5]
     : [45, 35, 25, 10, 5, 2.5, 1.25];
 
@@ -84,8 +84,8 @@ function App() {
 
   const [e1RMMultiplier, setE1RMMultiplier] = useState("100");
 
-  const [useCollars, setUseCollars] = useState('Collars');
-  const [platesUnit, setPlatesUnit] = useState('Kilos');
+  const [usingCollars, setUsingCollars] = useState(true);
+  const [usingKilos, setUsingKilos] = useState(true);
 
   const [barWeight, setBarWeight] = useState("");
   const [overrideBarWeight, setOverrideBarWeight] = useState(false);
@@ -162,7 +162,18 @@ function App() {
 
   const showTargetWeight = !errors.targetReps && targetWeight;
 
-  const { plates, actualWeight } = getPlates( barWeightNum, useCollars === 'Collars', platesUnit);
+  const { plates, actualWeight } = getPlates( barWeightNum, usingCollars, usingKilos);
+
+  let actualBarWeight;
+  if (usingKilos && usingCollars) {
+    actualBarWeight = Math.max(25, actualWeight);
+  } else if (usingKilos) {
+    actualBarWeight = Math.max(20, actualWeight);
+  }  else if (usingCollars) {
+    actualBarWeight = Math.max(56, actualWeight);
+  } else {
+    actualBarWeight = Math.max(45, actualWeight);
+  }
 
   return (
     <>
@@ -298,8 +309,8 @@ function App() {
           color="blue"
           size="xs"
           radius="xl"
-          value={useCollars}
-          onChange={setUseCollars}
+          value={usingCollars ? 'Collars' : 'None'}
+          onChange={(value) => setUsingCollars(value === 'Collars')}
           data={[{ value: 'Collars', label: 'Collars' } , { value: 'None', label: 'None' }]}
         />
 
@@ -307,8 +318,8 @@ function App() {
           color="blue"
           size="xs"
           radius="xl"
-          value={platesUnit}
-          onChange={setPlatesUnit}
+          value={usingKilos ? 'Kilos' : 'Pounds'}
+          onChange={(value) => setUsingKilos(value === 'Kilos')}
           data={[{ value: 'Kilos', label: 'Kilos' } , { value: 'Pounds', label: 'Pounds' }]}
         />
       </div>
@@ -325,7 +336,7 @@ function App() {
             value={barWeight ? barWeight : ""}
           />
           <div className="bar-weight-unit">
-            { platesUnit === 'Kilos' ? 'kg' : 'lb' }
+            { usingKilos ? 'kg' : 'lb' }
           </div>
         </div>
 
@@ -334,17 +345,17 @@ function App() {
           <div className="bar left2"/>
           <div className="plates">
             { plates.map((plate: number, index) => (
-              <div key={index} className={`plate ${platesUnit === "Kilos" ? "k" : "l"}${plate.toString().replace('.','p')}`}>
+              <div key={index} className={`plate ${usingKilos ? "k" : "l"}${plate.toString().replace('.','p')}`}>
                 { plate }
               </div>
             )) }
           </div>
-          {useCollars === 'Collars' && <div className="collar"/>}
+          {usingCollars && <div className="collar"/>}
           <div className="bar right"/>
         </div>
 
         <div className="actual-bar-weight">
-          ({actualWeight}{ platesUnit === 'Kilos' ? ' kg' : ' lbs' })
+          ({actualBarWeight}{ usingKilos ? ' kg' : ' lbs' })
         </div>
       </div>
 
