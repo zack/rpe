@@ -56,10 +56,10 @@ function roundTo(value: number, rounding: number) : number{
   return Math.round(value / rounding) * rounding;
 }
 
-const getRPECoefficient = (reps: RPE, rpe: number) => {
+const getRPECoefficient = (reps: number, rpe: RPE) => {
   // The new functions aren't perfect here due to a greater falloff
   // at high reps at 10RPE. Clamp this to 1 for nicer nubmers.
-  if (rpe === 10) {
+  if (rpe === 10 && reps === 1) {
     return 1;
   }
 
@@ -89,6 +89,7 @@ function App() {
 
   const [barWeight, setBarWeight] = useState("");
   const [overrideBarWeight, setOverrideBarWeight] = useState(false);
+  const [barWeightToE1RM, setBarWeightToE1RM] = useState(false);
 
   const startingWeightNum = Number(startingWeight);
   const startingRPENum = Number(startingRPE);
@@ -154,6 +155,11 @@ function App() {
   if (overrideBarWeight && targetWeight) {
     setBarWeight(targetWeight.toFixed(2));
     setOverrideBarWeight(false);
+  }
+
+  if (barWeightToE1RM && e1RM) {
+    setBarWeightToE1RM(false);
+    setBarWeight((e1RM * (e1RMMultiplierNum/100)).toFixed(2));
   }
 
   if (showE1RM && targetWeight && targetWeight < 0) {
@@ -293,7 +299,7 @@ function App() {
             className="e1rm-multiplier text"
             inputMode="numeric"
             maxLength={3}
-            onChange={(e) => { setE1RMMultiplier(e.target.value.replace(/[^0-9.]/g,"")); setOverrideBarWeight(true); }}
+            onChange={(e) => { setE1RMMultiplier(e.target.value.replace(/[^0-9.]/g,"")); setBarWeightToE1RM(true); }}
             value={e1RMMultiplierNum ? e1RMMultiplierNum : ""}
           />
           <div className="e1rm-percent">
