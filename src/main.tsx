@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { MantineProvider } from '@mantine/core';
 import { createTheme } from '@mantine/core';
+import { Analytics } from "@vercel/analytics/react"
 
 import App from './App.tsx';
 
@@ -19,5 +20,6 @@ createRoot(document.getElementById('root')!).render(
     <MantineProvider theme={theme}>
       <App />
     </MantineProvider>
+    <Analytics />
   </StrictMode>,
 );
