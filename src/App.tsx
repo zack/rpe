@@ -21,7 +21,7 @@ const RPE_FUNCTIONS = {
   10: (x: number) => -0.0277*(x-1) + 0.993,
 }
 
-function getPlates(weight: number | false, usingCollars: boolean, usingKilos: string) : { plates: number[], actualWeight: number } {
+function getPlates(weight: number | false, usingCollars: boolean, usingKilos: boolean) : { plates: number[], actualWeight: number } {
   if (!weight) {
     return ({ plates: [], actualWeight: 0 });
   }
@@ -56,7 +56,7 @@ function roundTo(value: number, rounding: number) : number{
   return Math.round(value / rounding) * rounding;
 }
 
-const getRPECoefficient = (reps: number, rpe: RPE) => {
+const getRPECoefficient = (reps: number, rpe: number) => {
   // The new functions aren't perfect here due to a greater falloff
   // at high reps at 10RPE. Clamp this to 1 for nicer nubmers.
   if (rpe === 10 && reps === 1) {
@@ -135,7 +135,7 @@ function App() {
     && startingRPENum
     && startingRPENum > 1
     && !errors.startingRPE
-    && (startingWeightNum / getRPECoefficient(startingReps as RPE, startingRPENum));
+    && (startingWeightNum / getRPECoefficient(startingReps, startingRPENum));
 
   if (e1RM && e1RM < 0) {
     errors.startingReps = "Reps too high"
@@ -150,7 +150,7 @@ function App() {
     && targetRPENum
     && targetRPENum > 1
     && !errors.targetRPE
-    && roundTo((e1RM * getRPECoefficient(targetReps as RPE, targetRPENum)), rounding);
+    && roundTo((e1RM * getRPECoefficient(targetReps, targetRPENum)), rounding);
 
   if (overrideBarWeight && targetWeight) {
     setBarWeight(targetWeight.toFixed(2));
@@ -168,7 +168,7 @@ function App() {
 
   const showTargetWeight = !errors.targetReps && targetWeight;
 
-  const { plates, actualWeight } = getPlates( barWeightNum, usingCollars, usingKilos);
+  const { plates, actualWeight } = getPlates(barWeightNum, usingCollars, usingKilos);
 
   let actualBarWeight;
   if (usingKilos && usingCollars) {
