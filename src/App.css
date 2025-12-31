@@ -9,17 +9,11 @@
 
 html,
 body {
-  background-color: #FEFEFE;
-  color: #454545;
-  font-family: "RobotCondensed", "Arial Narrow", Arial, sans-serif;
   font-size: 20px;
 }
 
-body {
-  margin: 0;
-}
-
 #root {
+  line-height: normal;
   border-top: 0;
   border: 3px solid #5E5E5E;
   margin: 0 auto;
@@ -41,9 +35,19 @@ body {
 }
 
 .results {
-  margin: 5px;
   font-weight: bold;
   font-size: 22px;
+}
+
+.results .target {
+  padding: 5px;
+  background-color: #EFEFEF;
+  border-bottom: 2px solid #CCCCCC;
+}
+
+.results .e1rm {
+  padding: 5px;
+  background-color: #DDDDDD;
 }
 
 .bar-loader {
@@ -211,8 +215,20 @@ input.bar-weight {
 .options {
   background-color: #CECECE;
   border-top: 3px solid #5E5E5E;
+  border-bottom: 3px solid #5E5E5E;
   padding: 5px 0;
+}
+
+.options.one {
+  font-weight: bold;
   text-align: center;
+}
+
+.options.two {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-weight: bold;
 }
 
 .options label.rounding {
@@ -263,7 +279,7 @@ h2 {
   position: relative;
 }
 
-label {
+.input-row label {
   background-color: #EEEEEE;
   border-top: 2px solid #CCCCCC;
   display: inline-block;
@@ -288,7 +304,7 @@ input.text {
   border-bottom: 0;
   border-right: 0;
   color: #454545;
-  font-size: 20px;
+  font-size: 22px;
   font-weight: bold;
   height: 40px;
   line-height: 18px;
@@ -304,7 +320,7 @@ input.text:focus-visible {
   border: 2px solid #2B7FFF;
   border-bottom: none;
   border-right: none;
-  box-shadow: 3px 0px #2B7FFF, 0 2px #2B7FFF, 3px 2px #2B7FFF;
+  box-shadow: 0 2px #2B7FFF, inset -2px 0px #2B7FFF;
   outline: none;
   z-index: 1;
 }
@@ -315,8 +331,17 @@ input.e1rm-multiplier {
     height: 30px;
     padding: 2px;
     position: relative;
-    width: 45px;
-    text-align: center;
+    padding-left: 5px;
+    width: 60px;
+}
+
+.e1rm-percent {
+  margin-right: -10px;
+  display: inline;
+  position: relative;
+  right: 20px;
+  user-select: none;
+  z-index: 1;
 }
 
 .input-row.border-bottom .input-container input {
@@ -325,7 +350,7 @@ input.e1rm-multiplier {
 
 .input-row.border-bottom .input-container input:focus-visible {
   border-bottom: 2px solid #2B7FFF;
-  box-shadow: 3px 0px #2B7FFF;
+  box-shadow: inset -2px 0px #2B7FFF;
 }
 
 .input-row .error {

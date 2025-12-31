@@ -1,5 +1,10 @@
 import { useState } from 'react'
-import './App.css'
+import { SegmentedControl } from "@mantine/core";
+
+import '@mantine/core/styles/FloatingIndicator.css';
+import '@mantine/core/styles/SegmentedControl.css';
+
+import "./App.css";
 
 type RPE = 5 | 6 | 7 | 8 | 9 | 10;
 
@@ -12,6 +17,10 @@ const RPE_FUNCTIONS = {
   8: (x: number) => -0.0259*(x-1) + 0.917,
   9: (x: number) => -0.0262*(x-1) + 0.947,
   10: (x: number) => -0.0277*(x-1) + 0.993,
+}
+
+function roundTo(value: number, rounding: number) {
+  return Math.round(value / rounding) * rounding;
 }
 
 const getRPECoefficient = (reps: RPE, rpe: number) => {
@@ -38,9 +47,17 @@ function App() {
   const [startingRPEFocused, setStartingRPEFocused] = useState(false);
   const [targetRPEFocused, setTargetRPEFocused] = useState(false);
 
+  const [rounding, setRounding] = useState(5);
+
+  const [e1RMMultiplier, setE1RMMultiplier] = useState("100");
+
+  const [useCollars, setUseCollars] = useState('Collars');
+  const [platesUnit, setPlatesUnit] = useState('Kilos');
+
   const startingWeightNum = Number(startingWeight);
   const startingRPENum = Number(startingRPE);
   const targetRPENum = Number(targetRPE);
+  const e1RMMultiplierNum = Number(e1RMMultiplier);;
 
   const errors = {
     startingWeight: "",
@@ -185,7 +202,7 @@ function App() {
         <div className="error">{errors.targetReps}</div>
       </div>
 
-      <div className={`input-row border-bottom ${errors.targetRPE && "error"}`}>
+      <div className={`input-row ${errors.targetRPE && "error"}`}>
         <div className="input-container">
           <label htmlFor="target-RPE"> RPE </label>
 
@@ -194,7 +211,7 @@ function App() {
             id="target-rpe"
             inputMode="numeric"
             onBlur={() => setTargetRPEFocused(false)}
-            onChange={(e) => setTargetRPE(e.target.value)}
+            onChange={(e) => setTargetRPE(e.target.value.replace(/[^0-9.]/g,""))}
             onFocus={() => setTargetRPEFocused(true)}
             value={targetRPE ? targetRPE : ""}
           />
@@ -203,9 +220,54 @@ function App() {
         <div className="error">{errors.targetRPE}</div>
       </div>
 
+      <div className="options one">
+        <label className="rounding" htmlFor="rounding" style={{ marginRight: "6px" }}> Target Weight Rounding: </label>
+        <select className="rounding" id="rounding" name="rounding" onChange={(e) => setRounding(Number(e.target.value))} style={{ paddingLeft: "14px" }}>
+          <option value="5"> 5.0 </option>
+          <option value="2.5"> 2.5 </option>
+          <option value="1"> 1.0 </option>
+          <option value="0.01"> 0.01 </option>
+        </select>
+      </div>
+
       <div className="results">
-        <div> Target weight: { showTargetWeight ? targetWeight.toFixed(2) : "..." } </div>
-        <div> E1RM: { showE1RM ? e1RM.toFixed(2) : "..." } </div>
+        <div className="target"> Target weight: { showTargetWeight ? roundTo(targetWeight, rounding).toFixed(2) : "..." } </div>
+        <div className="e1rm">
+          E1RM: { showE1RM ? e1RM.toFixed(2) : "..." }
+          {" "}x{" "}
+          <input
+            className="e1rm-multiplier text"
+            inputMode="numeric"
+            maxLength={3}
+            onChange={(e) => setE1RMMultiplier(e.target.value.replace(/[^0-9.]/g,""))}
+            value={e1RMMultiplierNum ? e1RMMultiplierNum : ""}
+          />
+          <div className="e1rm-percent">
+            %
+          </div>
+          ={" "}
+          { showE1RM ? (e1RM * (e1RMMultiplierNum/100)).toFixed(2) : "..." }
+        </div>
+      </div>
+
+      <div className="options two">
+        <SegmentedControl
+          color="blue"
+          size="xs"
+          radius="xl"
+          value={useCollars}
+          onChange={setUseCollars}
+          data={[{ value: 'Collars', label: 'Collars' } , { value: 'None', label: 'None' }]}
+        />
+
+        <SegmentedControl
+          color="blue"
+          size="xs"
+          radius="xl"
+          value={platesUnit}
+          onChange={setPlatesUnit}
+          data={[{ value: 'Kilos', label: 'Kilos' } , { value: 'Pounds', label: 'Pounds' }]}
+        />
       </div>
     </>
   )
