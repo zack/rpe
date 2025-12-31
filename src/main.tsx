@@ -10,7 +10,7 @@ import '@mantine/core/styles/default-css-variables.css';
 import '@mantine/core/styles/global.css';
 
 export const theme = createTheme({
-  fontFamily: "RobotCondensed, Arial Narrow, Arial, sans-serif",
+  fontFamily: "RobotoCondensed, Arial Narrow, Arial, sans-serif",
   black: "#454545",
 });
 
