@@ -327,7 +327,7 @@ function App() {
           className='rounding'
           id='rounding'
           name='rounding'
-          onChange={(e) => setRounding(Number(e.target.value))}
+          onChange={(e) => { setRounding(Number(e.target.value)); setOverrideBarWeight(true); }}
           style={{ paddingLeft: '14px' }}
         >
           <option value='5'> 5.0 </option>
