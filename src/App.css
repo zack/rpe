@@ -80,7 +80,7 @@ input.bar-weight {
 .bar-disclaimer {
   font-size: 14px;
   font-weight: bold;
-  margin: 0 auto;
+  margin: 0 15px;
   padding-bottom: 12px;
   text-align: center;
 }
@@ -252,6 +252,7 @@ input.bar-weight {
   padding: 3px 0;
   text-align: center;
   width: 100%;
+  font-size: 14px;
 }
 
 .subheader {

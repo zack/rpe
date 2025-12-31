@@ -6,6 +6,8 @@ import '@mantine/core/styles/SegmentedControl.css';
 
 import "./App.css";
 
+const YEAR = (new Date).getFullYear();
+
 type RPE = 5 | 6 | 7 | 8 | 9 | 10;
 
 // These functions are derived from linear regressions of the RPE chart data
@@ -19,7 +21,45 @@ const RPE_FUNCTIONS = {
   10: (x: number) => -0.0277*(x-1) + 0.993,
 }
 
-function roundTo(value: number, rounding: number) {
+function getPlates(weight: number | false, useCollars: boolean, platesUnit: string) : { plates: number[], actualWeight: number } {
+  if (!weight) {
+    return ({ plates: [], actualWeight: 0 });
+  }
+
+  console.log("====================== START");
+  console.log({ weight });
+
+  const barWeight = platesUnit === 'Kilos' ? 20 : 45;
+  const collarWeight = useCollars ? 5 : 0;
+  let remainingWeight = weight - barWeight - collarWeight;
+  let actualWeight = barWeight + collarWeight;
+
+  console.log({ startingWeight: remainingWeight });
+
+  const plateSizes = platesUnit === 'Kilos'
+    ? [25, 20, 15, 10, 5, 2.5, 1.25, 0.5]
+    : [45, 25, 10, 5, 2.5, 1.25, 0.5, 0.25];
+
+  const largestPossiblePlate = (remainingWeight: number) : number | undefined => {
+    return plateSizes.find(plate => plate * 2 <= remainingWeight);
+  }
+
+  const plates: number[] = [];
+
+  while (largestPossiblePlate(remainingWeight) !== undefined) {
+    const nextPlate =largestPossiblePlate(remainingWeight) as number;
+    plates.push(nextPlate);
+    console.log({ nextPlate });
+    remainingWeight -= 2 * nextPlate;
+    actualWeight += 2 * nextPlate;
+    console.log({ remainingWeight });
+  }
+
+  console.log({ plates });
+  return ({ plates, actualWeight });;
+}
+
+function roundTo(value: number, rounding: number) : number{
   return Math.round(value / rounding) * rounding;
 }
 
@@ -112,7 +152,8 @@ function App() {
     && targetRPENum
     && targetRPENum > 1
     && !errors.targetRPE
-    && e1RM * getRPECoefficient(targetReps as RPE, targetRPENum);
+    && roundTo((e1RM * getRPECoefficient(targetReps as RPE, targetRPENum)), rounding);
+
 
   if (showE1RM && targetWeight && targetWeight < 0) {
     errors.targetReps = "Reps too high"
@@ -120,6 +161,7 @@ function App() {
 
   const showTargetWeight = !errors.targetReps && targetWeight;
 
+  const { plates, actualWeight } = getPlates(targetWeight, useCollars === 'Collars', platesUnit);
 
   return (
     <>
@@ -231,7 +273,7 @@ function App() {
       </div>
 
       <div className="results">
-        <div className="target"> Target weight: { showTargetWeight ? roundTo(targetWeight, rounding).toFixed(2) : "..." } </div>
+        <div className="target"> Target weight: { showTargetWeight ? targetWeight.toFixed(2) : "..." } </div>
         <div className="e1rm">
           E1RM: { showE1RM ? e1RM.toFixed(2) : "..." }
           {" "}x{" "}
@@ -268,6 +310,42 @@ function App() {
           onChange={setPlatesUnit}
           data={[{ value: 'Kilos', label: 'Kilos' } , { value: 'Pounds', label: 'Pounds' }]}
         />
+      </div>
+
+      <div className="bar-loader">
+        <div className="flex-pad">
+        </div>
+
+        <div className="bar-container">
+          <div className="bar left"/>
+          <div className="bar left2"/>
+          <div className="plates">
+            { plates.map((plate: number, index) => (
+              <div key={index} className={`plate k${plate.toString().replace('.','p')}`}>
+                { plate }
+              </div>
+            )) }
+          </div>
+          {useCollars === 'Collars' && <div className="collar"/>}
+          <div className="bar right"/>
+        </div>
+
+        <div className="actual-bar-weight flex-pad">
+          ({actualWeight}{ platesUnit === 'Kilos' ? ' kg' : ' lbs' })
+        </div>
+      </div>
+
+      <div className="bar-disclaimer">
+        Not all weights can be made. Bar loader will always round down to the next possible weight.
+      </div>
+
+      <div className="footer">
+        <div>
+          © {YEAR} Zack Youngren
+        </div>
+        <div>
+          Code on <a href="https://www.github.com/zack/rpe"> GitHub </a>
+        </div>
       </div>
     </>
   )
