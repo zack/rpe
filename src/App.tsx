@@ -26,19 +26,14 @@ function getPlates(weight: number | false, useCollars: boolean, platesUnit: stri
     return ({ plates: [], actualWeight: 0 });
   }
 
-  console.log("====================== START");
-  console.log({ weight });
-
   const barWeight = platesUnit === 'Kilos' ? 20 : 45;
-  const collarWeight = useCollars ? 5 : 0;
+  const collarWeight = useCollars ? (platesUnit === 'Kilos' ? 5 : 11) : 0;
   let remainingWeight = weight - barWeight - collarWeight;
   let actualWeight = barWeight + collarWeight;
 
-  console.log({ startingWeight: remainingWeight });
-
   const plateSizes = platesUnit === 'Kilos'
     ? [25, 20, 15, 10, 5, 2.5, 1.25, 0.5]
-    : [45, 25, 10, 5, 2.5, 1.25, 0.5, 0.25];
+    : [45, 35, 25, 10, 5, 2.5, 1.25];
 
   const largestPossiblePlate = (remainingWeight: number) : number | undefined => {
     return plateSizes.find(plate => plate * 2 <= remainingWeight);
@@ -46,16 +41,14 @@ function getPlates(weight: number | false, useCollars: boolean, platesUnit: stri
 
   const plates: number[] = [];
 
+
   while (largestPossiblePlate(remainingWeight) !== undefined) {
     const nextPlate =largestPossiblePlate(remainingWeight) as number;
     plates.push(nextPlate);
-    console.log({ nextPlate });
     remainingWeight -= 2 * nextPlate;
     actualWeight += 2 * nextPlate;
-    console.log({ remainingWeight });
   }
 
-  console.log({ plates });
   return ({ plates, actualWeight });;
 }
 
@@ -94,10 +87,14 @@ function App() {
   const [useCollars, setUseCollars] = useState('Collars');
   const [platesUnit, setPlatesUnit] = useState('Kilos');
 
+  const [barWeight, setBarWeight] = useState("");
+  const [overrideBarWeight, setOverrideBarWeight] = useState(false);
+
   const startingWeightNum = Number(startingWeight);
   const startingRPENum = Number(startingRPE);
   const targetRPENum = Number(targetRPE);
   const e1RMMultiplierNum = Number(e1RMMultiplier);;
+  const barWeightNum = Number(barWeight);
 
   const errors = {
     startingWeight: "",
@@ -154,6 +151,10 @@ function App() {
     && !errors.targetRPE
     && roundTo((e1RM * getRPECoefficient(targetReps as RPE, targetRPENum)), rounding);
 
+  if (overrideBarWeight && targetWeight) {
+    setBarWeight(targetWeight.toFixed(2));
+    setOverrideBarWeight(false);
+  }
 
   if (showE1RM && targetWeight && targetWeight < 0) {
     errors.targetReps = "Reps too high"
@@ -161,7 +162,7 @@ function App() {
 
   const showTargetWeight = !errors.targetReps && targetWeight;
 
-  const { plates, actualWeight } = getPlates(targetWeight, useCollars === 'Collars', platesUnit);
+  const { plates, actualWeight } = getPlates( barWeightNum, useCollars === 'Collars', platesUnit);
 
   return (
     <>
@@ -181,7 +182,7 @@ function App() {
             className="text"
             id="starting-weight"
             inputMode="numeric"
-            onChange={(e) => setStartingWeight(e.target.value.replace(/[^0-9.]/g,""))}
+            onChange={(e) => { setStartingWeight(e.target.value.replace(/[^0-9.]/g,"")); setOverrideBarWeight(true); }}
             type="text"
             value={startingWeight ? startingWeight : ""}
           />
@@ -198,7 +199,7 @@ function App() {
             className="text"
             id="starting-reps"
             inputMode="numeric"
-            onChange={(e) => setStartingReps(Number(e.target.value))}
+            onChange={(e) => { setStartingReps(Number(e.target.value)); setOverrideBarWeight(true); }}
             value={startingReps ? startingReps : ""}
           />
         </div>
@@ -215,7 +216,7 @@ function App() {
             id="starting-rpe"
             inputMode="numeric"
             onBlur={() => setStartingRPEFocused(false)}
-            onChange={(e) => setStartingRPE(e.target.value.replace(/[^0-9.]/g,""))}
+            onChange={(e) => { setStartingRPE(e.target.value.replace(/[^0-9.]/g,"")); setOverrideBarWeight(true); }}
             onFocus={() => setStartingRPEFocused(true)}
             value={startingRPENum ? startingRPE : ""}
           />
@@ -236,7 +237,7 @@ function App() {
             className="text"
             id="target-reps"
             inputMode="numeric"
-            onChange={(e) => setTargetReps(Number(e.target.value))}
+            onChange={(e) => { setTargetReps(Number(e.target.value)); setOverrideBarWeight(true); }}
             value={targetReps ? targetReps : ""}
           />
         </div>
@@ -253,7 +254,7 @@ function App() {
             id="target-rpe"
             inputMode="numeric"
             onBlur={() => setTargetRPEFocused(false)}
-            onChange={(e) => setTargetRPE(e.target.value.replace(/[^0-9.]/g,""))}
+            onChange={(e) => { setTargetRPE(e.target.value.replace(/[^0-9.]/g,"")); setOverrideBarWeight(true); }}
             onFocus={() => setTargetRPEFocused(true)}
             value={targetRPE ? targetRPE : ""}
           />
@@ -281,7 +282,7 @@ function App() {
             className="e1rm-multiplier text"
             inputMode="numeric"
             maxLength={3}
-            onChange={(e) => setE1RMMultiplier(e.target.value.replace(/[^0-9.]/g,""))}
+            onChange={(e) => { setE1RMMultiplier(e.target.value.replace(/[^0-9.]/g,"")); setOverrideBarWeight(true); }}
             value={e1RMMultiplierNum ? e1RMMultiplierNum : ""}
           />
           <div className="e1rm-percent">
@@ -313,7 +314,19 @@ function App() {
       </div>
 
       <div className="bar-loader">
-        <div className="flex-pad">
+        <div className="bar-weight-container">
+          <input
+            className="bar-weight"
+            id="bar-weight"
+            inputMode="numeric"
+            onChange={(e) => { setBarWeight(e.target.value.replace(/[^0-9.]/g,"")) }}
+            onBlur={() => setBarWeight(barWeight ? Number(barWeight).toFixed(2) : "")}
+            type="text"
+            value={barWeight ? barWeight : ""}
+          />
+          <div className="bar-weight-unit">
+            { platesUnit === 'Kilos' ? 'kg' : 'lb' }
+          </div>
         </div>
 
         <div className="bar-container">
@@ -321,7 +334,7 @@ function App() {
           <div className="bar left2"/>
           <div className="plates">
             { plates.map((plate: number, index) => (
-              <div key={index} className={`plate k${plate.toString().replace('.','p')}`}>
+              <div key={index} className={`plate ${platesUnit === "Kilos" ? "k" : "l"}${plate.toString().replace('.','p')}`}>
                 { plate }
               </div>
             )) }
@@ -330,7 +343,7 @@ function App() {
           <div className="bar right"/>
         </div>
 
-        <div className="actual-bar-weight flex-pad">
+        <div className="actual-bar-weight">
           ({actualWeight}{ platesUnit === 'Kilos' ? ' kg' : ' lbs' })
         </div>
       </div>

@@ -56,20 +56,40 @@ body {
   height: 165px;
   margin: 20px 0;
   place-content: center;
+  justify-content: space-between;
+  margin: 10px;
 }
 
 .bar-container {
-  align-items: center;
   display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bar-weight-container {
+  display: flex;
+  width: 85px;
 }
 
 input.bar-weight {
   border-radius: 5px;
   border: 2px solid black;
-  font-size: 20px;
+  display: inline;
+  font-weight: bold;
   height: 40px;
-  text-align: center;
-  width: 70px;
+  padding-left: 5px;
+  padding: 2px;
+  position: relative;
+  width: 85px;
+}
+
+.bar-weight-unit {
+  display: inline;
+  position: relative;
+  right: 22px;
+  top: 7.5px;
+  user-select: none;
+  z-index: 1;
 }
 
 .actual-bar-weight {
@@ -131,39 +151,39 @@ input.bar-weight {
   writing-mode: vertical-rl;
 }
 
-.plate.k25 {
+.plate.k25, .plate.l55 {
   background: #d90000;
   border: 2px solid #970000;
   height: 160px;
 }
 
-.plate.k20 {
+.plate.k20, .plate.l45 {
   background: #0000b7;
   border: 2px solid #170068;
   height: 160px;
 }
 
-.plate.k15 {
+.plate.k15, .plate.l35 {
   background: #eaea14;
   border: 2px solid #b1b100;
   color: black;
   height: 160px;
 }
 
-.plate.k10 {
+.plate.k10, .plate.l25 {
   background: green;
   border: 2px solid #004200;
   height: 160px;
 }
 
-.plate.k5 {
+.plate.k5, .plate.l10 {
   background: white;
   border: 2px solid #ccc;
   color: black;
   height: 120px;
 }
 
-.plate.k2p5 {
+.plate.k2p5, .plate.l5 {
   background: black;
   border: 2px solid black;
   height: 110px;
@@ -171,7 +191,7 @@ input.bar-weight {
   width: 17px;
 }
 
-.plate.k1p25 {
+.plate.k1p25, .plate.l2p5 {
   background: silver;
   border: 2px solid grey;
   color: black;
@@ -180,15 +200,15 @@ input.bar-weight {
   width: 17px;
 }
 
-.plate.k0p5 {
+.plate.k0p5, .plate.l1p25 {
   background: green;
   border: 2px solid #004200;
-  height: 70px;
+  height: 85px;
   line-height: 8px;
   width: 12px;
 }
 
-.plate.k0 {
+.plate.k0, .plate.l0 {
   display: none;
 }
 
@@ -327,13 +347,13 @@ input.text:focus-visible {
 }
 
 input.e1rm-multiplier {
-    border: 1px solid grey;
-    display: inline;
-    height: 30px;
-    padding: 2px;
-    position: relative;
-    padding-left: 5px;
-    width: 60px;
+  border: 1px solid grey;
+  display: inline;
+  height: 30px;
+  padding: 2px;
+  position: relative;
+  padding-left: 5px;
+  width: 60px;
 }
 
 .e1rm-percent {
