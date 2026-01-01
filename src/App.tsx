@@ -215,7 +215,7 @@ function App() {
           <input
             className='text'
             id='starting-weight'
-            inputMode='numeric'
+            inputMode='decimal'
             onChange={(e) => {
               setStartingWeight(e.target.value.replace(/[^0-9.]/g, ''));
               setOverrideBarWeight(true);
@@ -235,7 +235,7 @@ function App() {
           <input
             className='text'
             id='starting-reps'
-            inputMode='numeric'
+            inputMode='decimal'
             onChange={(e) => {
               setStartingReps(Number(e.target.value));
               setOverrideBarWeight(true);
@@ -256,7 +256,7 @@ function App() {
           <input
             className='text'
             id='starting-rpe'
-            inputMode='numeric'
+            inputMode='decimal'
             onBlur={() => setStartingRPEFocused(false)}
             onChange={(e) => {
               setStartingRPE(e.target.value.replace(/[^0-9.]/g, ''));
@@ -281,7 +281,7 @@ function App() {
           <input
             className='text'
             id='target-reps'
-            inputMode='numeric'
+            inputMode='decimal'
             onChange={(e) => {
               setTargetReps(Number(e.target.value));
               setOverrideBarWeight(true);
@@ -300,7 +300,7 @@ function App() {
           <input
             className='text'
             id='target-rpe'
-            inputMode='numeric'
+            inputMode='decimal'
             onBlur={() => setTargetRPEFocused(false)}
             onChange={(e) => {
               setTargetRPE(e.target.value.replace(/[^0-9.]/g, ''));
@@ -348,7 +348,7 @@ function App() {
           E1RM: {showE1RM ? e1RM.toFixed(2) : '...'} x{' '}
           <input
             className='e1rm-multiplier text'
-            inputMode='numeric'
+            inputMode='decimal'
             maxLength={3}
             onChange={(e) => {
               setE1RMMultiplier(e.target.value.replace(/[^0-9.]/g, ''));
@@ -392,7 +392,7 @@ function App() {
           <input
             className='bar-weight'
             id='bar-weight'
-            inputMode='numeric'
+            inputMode='decimal'
             onChange={(e) => {
               setBarWeight(e.target.value.replace(/[^0-9.]/g, ''));
             }}
