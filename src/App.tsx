@@ -11,20 +11,27 @@ import {
 
 import {
   ActionIcon,
+  Button,
+  Modal,
   SegmentedControl,
 } from '@mantine/core';
 import { IconBrandGithubFilled, IconHelpCircleFilled, IconSettingsFilled } from '@tabler/icons-react';
 
 // Required for other components
+import '@mantine/core/styles/CloseButton.css';
 import '@mantine/core/styles/FloatingIndicator.css';
 import '@mantine/core/styles/InlineInput.css';
 import '@mantine/core/styles/Input.css';
+import '@mantine/core/styles/ModalBase.css';
+import '@mantine/core/styles/Overlay.css';
+import '@mantine/core/styles/Paper.css';
 import '@mantine/core/styles/UnstyledButton.css';
 
 // For components that are actually used directly
 import '@mantine/core/styles/ActionIcon.css';
 import '@mantine/core/styles/Button.css';
 import '@mantine/core/styles/Checkbox.css';
+import '@mantine/core/styles/Modal.css';
 import '@mantine/core/styles/SegmentedControl.css';
 import '@mantine/core/styles/Stack.css';
 
@@ -106,6 +113,7 @@ const getRPECoefficient = (reps: number, rpe: number) => {
 
 function App() {
   const [view, setView] = useState<View>(View.DEFAULT);
+  const [showModal, setShowModal] = useState((() => window.localStorage.getItem('modal-dismissed') !== 'true'));
 
   const [startingWeight, setStartingWeight] = useState('');
   const [startingReps, setStartingReps] = useState(0);
@@ -250,6 +258,37 @@ function App() {
 
   return (
     <>
+      <Modal
+        opened={showModal}
+        title="Hello!"
+        centered
+        onClose={() => { setShowModal(false); window.localStorage.setItem('modal-dismissed', 'true'); }}
+      >
+        <div className="modal-section">
+          Thank you for using this calculator! There are some <b>new features</b> you should know about.
+        </div>
+
+        <div className="modal-section">
+          If you click on the settings button (the gear icon) in the bottom right,
+          you can now customize what plates the loader will use and whether to use
+          kilos or pounds and collars. <b>These settings will be saved in your
+          browser for next time.</b>
+        </div>
+
+        <div className="modal-section">
+          Feel free to reach out with any bugs or suggestions! Check the new help
+          section by clicking the question mark icon in the bottom right for details.
+        </div>
+
+        <div className="modal-close">
+          <Button
+            onClick={() => { setShowModal(false); window.localStorage.setItem('modal-dismissed', 'true'); }}
+          >
+            Close forever
+          </Button>
+        </div>
+      </Modal>
+
       <div className='header'>
         <h1> RPE Calculator </h1>
       </div>

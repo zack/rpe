@@ -480,3 +480,12 @@ input.e1rm-multiplier {
     inset 2px 2px #c00000,
     inset -2px -2px #c00000;
 }
+
+.modal-section {
+  margin: 15px 0;
+}
+
+.modal-close {
+  display: flex;
+  justify-content: center;
+}
