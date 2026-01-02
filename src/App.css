@@ -155,6 +155,7 @@ input.bar-weight {
   display: flex;
   margin: 20px 0;
   place-content: center;
+  user-select: none;
 }
 
 .bar {
