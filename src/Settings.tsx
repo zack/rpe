@@ -17,10 +17,10 @@ type SettingsProps = {
   defaultKilos: boolean;
   defaultPoundPlates: number[];
   handleClose: () => void;
-  handleSetDefaultCollars: React.Dispatch<React.SetStateAction<boolean>>;
-  handleSetDefaultKiloPlates: React.Dispatch<React.SetStateAction<string[]>>;
-  handleSetDefaultKilos: React.Dispatch<React.SetStateAction<boolean>>;
-  handleSetDefaultPoundPlates: React.Dispatch<React.SetStateAction<boolean>>;
+  handleSetDefaultCollars: (value: boolean) => void,
+  handleSetDefaultKiloPlates: (value: string[]) => void,
+  handleSetDefaultKilos: (value: boolean) => void,
+  handleSetDefaultPoundPlates: (value: string[]) => void,
 }
 
 const Settings = ({
