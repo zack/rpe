@@ -1,10 +1,17 @@
 import { Activity, useState } from 'react';
+
+import BarLoader from './BarLoader';
+import Help from './Help';
+import Settings from './Settings';
+
+import {
+  PLATE_SIZES_KILOS,
+  PLATE_SIZES_POUNDS
+} from './constants.ts';
+
 import {
   ActionIcon,
-  Button,
-  Checkbox,
   SegmentedControl,
-  Stack,
 } from '@mantine/core';
 import { IconBrandGithubFilled, IconHelpCircleFilled, IconSettingsFilled } from '@tabler/icons-react';
 
@@ -33,10 +40,6 @@ const View = {
   SETTINGS: 'settings',
 } as const;
 type View = (typeof View)[keyof typeof View];
-
-// Plate size options
-const PLATE_SIZES_KILOS = [25, 20, 15, 10, 5, 2.5, 1.25, 0.5, 0.25];
-const PLATE_SIZES_POUNDS = [55, 45, 35, 25, 10, 5, 2.5, 1.25, 0.5];
 
 type RPE = 5 | 6 | 7 | 8 | 9 | 10;
 
@@ -245,19 +248,6 @@ function App() {
     barWeightNum,
   );
 
-  console.log({ plates });
-
-  let actualBarWeight;
-  if (usingKilos && usingCollars) {
-    actualBarWeight = Math.max(25, actualWeight);
-  } else if (usingKilos) {
-    actualBarWeight = Math.max(20, actualWeight);
-  } else if (usingCollars) {
-    actualBarWeight = Math.max(56, actualWeight);
-  } else {
-    actualBarWeight = Math.max(45, actualWeight);
-  }
-
   return (
     <>
       <div className='header'>
@@ -265,111 +255,21 @@ function App() {
       </div>
 
       <Activity mode={view === View.HELP ? 'visible' : 'hidden'}>
-        <div className="help-content">
-          <h2>How do I use this tool?</h2>
-          <ul>
-            <li> Input the weight, reps, and your RPE for a given set.</li>
-            <li> Input your desired reps and RPE for your next set.</li>
-            <li> The calculator will output the recommended weight for your next set based on the provided inputs.</li>
-            <li> Don't take the nubmer as gospel. Everyone is different and every day is different. It's just a helpful starting place.</li>
-            <li> The calculations are unit-agnostic, so you can use either pounds or kilograms.</li>
-            <li> The bar loader will show you how to load the bar for that weight, given your choice of collars and units.</li>
-          </ul>
-          <h2>What is "RPE"?</h2>
-          <ul>
-            <li> RPE stands for "Rate of Perceived Exertion" and is a measurement of exertion used to gauge the intensity of an exercise.</li>
-            <li> A set at RPE 10 means you could not perform any more reps.</li>
-            <li> A set at RPE 9 means you could perform 1 more rep.</li>
-            <li> A set at RPE 8 means you could perform 2 more reps, etc.</li>
-          </ul>
-          <h2>Where do the numbers come from?</h2>
-          <ul>
-            <li> A chart on the wall of my old gym, slightly modified to be a linear scale.</li>
-          </ul>
-          <h2>Feedback</h2>
-          <ul>
-            <li> Notice a bug or have a request? Feel free to email me at rpe [at] youngren.io or <a href="https://github.com/zack/rpe/issues/new">open an issue on GitHub</a></li>
-          </ul>
-        </div>
-
-        <div className="help-actions">
-          <Button className="help-close" onClick={ () => setView(View.DEFAULT) }> Close this help </Button>
-        </div>
+        <Help handleClose={() => setView(View.DEFAULT)} />
       </Activity>
 
       <Activity mode={view === View.SETTINGS ? 'visible' : 'hidden'}>
-        <div className="settings">
-          <h2> Defaults </h2>
-
-          <div className="settings-explanation"> These are the settings that will bet set every time you open the application.</div>
-
-          <div className="settings-defaults">
-            <div>
-              <b>Collars:{' '}</b>
-              <SegmentedControl
-                color='blue'
-                size='xs'
-                radius='xl'
-                value={defaultCollars ? 'Collars' : 'None'}
-                onChange={(value) => handleSetDefaultCollars(value === 'Collars')}
-                data={[
-                  { value: 'Collars', label: 'Collars' },
-                { value: 'None', label: 'None' },
-                ]}
-              />
-            </div>
-
-            <div>
-              <b>Units:{' '}</b>
-              <SegmentedControl
-                color='blue'
-                size='xs'
-                radius='xl'
-                value={defaultKilos ? 'Kilos' : 'Pounds'}
-                onChange={(value) => handleSetDefaultKilos(value === 'Kilos')}
-                data={[
-                  { value: 'Kilos', label: 'Kilos' },
-                { value: 'Pounds', label: 'Pounds' },
-                ]}
-              />
-            </div>
-          </div>
-
-          <h2> Plate Choices </h2>
-
-          <div> These are the plates that the plate loader will consider available. Select the plates that you have access to in your space.</div>
-
-          <div className="plate-choices">
-            <Checkbox.Group
-              label="Kilo plates"
-              onChange={handleSetDefaultKiloPlates}
-              value={defaultKiloPlates.map((plate: number) => `${plate}`)}
-            >
-              <Stack gap={'xs'}>
-                {PLATE_SIZES_KILOS.map((plate) => (
-                  <Checkbox key={plate} className='checkbox kilos' value={`${plate}`} label={`${plate}`} />
-                ))}
-              </Stack>
-            </Checkbox.Group>
-
-            <Checkbox.Group
-              label="Pound plates"
-              onChange={handleSetDefaultPoundPlates}
-              value={defaultPoundPlates.map((plate: number) => `${plate}`)}
-            >
-              <Stack gap={'xs'}>
-                {PLATE_SIZES_POUNDS.map((plate) => (
-                  <Checkbox key={plate} className='checkbox pounds' value={`${plate}`} label={`${plate}`} />
-                ))}
-              </Stack>
-            </Checkbox.Group>
-
-          </div>
-        </div>
-
-        <div className="help-actions">
-          <Button className="help-close" onClick={ () => setView(View.DEFAULT) }> Close settings </Button>
-        </div>
+        <Settings
+          defaultCollars={defaultCollars}
+          defaultKiloPlates={defaultKiloPlates}
+          defaultKilos={defaultKilos}
+          defaultPoundPlates={defaultPoundPlates}
+          handleClose={() => setView(View.DEFAULT)}
+          handleSetDefaultCollars={handleSetDefaultCollars}
+          handleSetDefaultKiloPlates={handleSetDefaultKiloPlates}
+          handleSetDefaultKilos={handleSetDefaultKilos}
+          handleSetDefaultPoundPlates={handleSetDefaultPoundPlates}
+        />
       </Activity>
 
       <Activity mode={ view === View.DEFAULT ? 'visible' : 'hidden'}>
@@ -556,51 +456,14 @@ function App() {
           />
         </div>
 
-        <div className='bar-loader'>
-          <div className='bar-weight-container'>
-            <input
-              className='bar-weight'
-              id='bar-weight'
-              inputMode='decimal'
-              onChange={(e) => {
-                setBarWeight(e.target.value.replace(/[^0-9.]/g, ''));
-              }}
-              onBlur={() =>
-                setBarWeight(barWeight ? Number(barWeight).toFixed(2) : '')
-              }
-              type='text'
-              value={barWeight ? barWeight : ''}
-            />
-            <div className='bar-weight-unit'>{usingKilos ? 'kg' : 'lb'}</div>
-          </div>
-
-          <div className='bar-container'>
-            <div className='bar left' />
-            <div className='bar left2' />
-            <div className='plates'>
-              {plates.map((plate: number, index) => (
-                <div
-                  key={index}
-                  className={`plate ${usingKilos ? 'k' : 'l'}${plate.toString().replace('.', 'p')}`}
-                >
-                  {plate}
-                </div>
-              ))}
-            </div>
-            {usingCollars && <div className='collar' />}
-            <div className='bar right' />
-          </div>
-
-          <div className='actual-bar-weight'>
-            ({actualBarWeight}
-            {usingKilos ? ' kg' : ' lbs'})
-          </div>
-        </div>
-
-        <div className='bar-disclaimer'>
-          Not all weights can be made. Bar loader will always round down to the
-          next possible weight.
-        </div>
+        <BarLoader
+          actualWeight={actualWeight}
+          barWeight={barWeight}
+          plates={plates}
+          setBarWeight={setBarWeight}
+          usingCollars={usingCollars}
+          usingKilos={usingKilos}
+        />
       </Activity>
 
       <div className='footer'>
