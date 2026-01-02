@@ -34,6 +34,51 @@ body {
   width: 100%;
 }
 
+.settings {
+  margin: 10px 10px 0 10px;
+}
+
+.settings-explanation {
+  margin: 10px 0;
+}
+
+.settings-defaults {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.plate-choices {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 10px 0px 10px
+}
+
+.plate-choices .checkbox.pounds {
+  margin-left: 15px;
+}
+
+.plate-choices .checkbox.kilos {
+  margin-left: 9px;
+}
+
+.help-content {
+  font-size: 18px;
+  margin: 10px 10px 0px 10px;
+}
+
+.help-content ul {
+  margin: 0;
+  padding-left: 20px;
+  padding-bottom: 10px;
+}
+
+.help-actions {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 10px;
+}
+
 .results {
   font-weight: bold;
   font-size: 22px;
@@ -216,6 +261,16 @@ input.bar-weight {
   width: 12px;
 }
 
+.plate.k0p25,
+.plate.l0p5 {
+  background: silver;
+  border: 2px solid gray;
+  color: white;
+  height: 85px;
+  line-height: 8px;
+  width: 12px;
+}
+
 .plate.k0,
 .plate.l0 {
   display: none;
@@ -279,9 +334,23 @@ input.bar-weight {
   background-color: #cecece;
   border-top: 3px solid #5e5e5e;
   padding: 3px 0;
-  text-align: center;
   width: 100%;
-  font-size: 14px;
+}
+
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 10px;
+}
+
+.footer button, a {
+  margin-top: 3px;
+  margin-right: 10px;
+}
+
+.attribution {
+  font-size: 16px;
 }
 
 .subheader {
