@@ -32,6 +32,7 @@ const BarLoader = ({
           <input
             className='bar-weight'
             id='bar-weight'
+            aria-label='Bar loader weight override'
             inputMode='decimal'
             onChange={(e) => {
               setBarWeight(e.target.value.replace(/[^0-9.]/g, ''));

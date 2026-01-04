@@ -33,7 +33,13 @@ const Help = ({ handleClose } : { handleClose: () => void }) => {
       </div>
 
       <div className="help-actions">
-        <Button className="help-close" onClick={handleClose}> Close this help </Button>
+        <Button
+        className="help-close"
+        color='#1779CE'
+        onClick={handleClose}
+        >
+        Close this help
+        </Button>
       </div>
     </>
   );

@@ -44,7 +44,7 @@ const Settings = ({
           <div>
             <b>Collars:{' '}</b>
             <SegmentedControl
-              color='blue'
+              color='#1779CE'
               size='xs'
               radius='xl'
               value={defaultCollars ? 'Collars' : 'None'}
@@ -59,7 +59,7 @@ const Settings = ({
           <div>
             <b>Units:{' '}</b>
             <SegmentedControl
-              color='blue'
+              color='#1779CE'
               size='xs'
               radius='xl'
               value={defaultKilos ? 'Kilos' : 'Pounds'}
@@ -105,7 +105,13 @@ const Settings = ({
       </div>
 
       <div className="help-actions">
-        <Button className="help-close" onClick={handleClose}> Close settings </Button>
+        <Button
+        className="help-close"
+        color='#1779CE'
+        onClick={handleClose}
+        >
+        Close settings
+        </Button>
       </div>
     </>
   );
