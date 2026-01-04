@@ -360,7 +360,7 @@ function App() {
           className={`input-row border-bottom ${errors.startingRPE && 'error'}`}
         >
           <div className='input-container'>
-            <label htmlFor='starting-RPE'> RPE </label>
+            <label htmlFor='starting-rpe'> RPE </label>
 
             <input
               className='text'
@@ -404,7 +404,7 @@ function App() {
 
         <div className={`input-row ${errors.targetRPE && 'error'}`}>
           <div className='input-container'>
-            <label htmlFor='target-RPE'> RPE </label>
+            <label htmlFor='target-rpe'> RPE </label>
 
             <input
               className='text'
@@ -457,6 +457,7 @@ function App() {
             E1RM: {showE1RM ? e1RM.toFixed(2) : '...'} x{' '}
             <input
               className='e1rm-multiplier text'
+              aria-label='Estimated 1 rep max multiplier'
               inputMode='decimal'
               maxLength={3}
               onChange={(e) => {
@@ -472,7 +473,7 @@ function App() {
 
         <div className='options two'>
           <SegmentedControl
-            color='blue'
+            color='#1779CE'
             size='xs'
             radius='xl'
             value={usingCollars ? 'Collars' : 'None'}
@@ -484,7 +485,7 @@ function App() {
           />
 
           <SegmentedControl
-            color='blue'
+            color='#1779CE'
             size='xs'
             radius='xl'
             value={usingKilos ? 'Kilos' : 'Pounds'}
