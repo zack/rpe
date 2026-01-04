@@ -4,8 +4,4 @@
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
   ],
-  "compilerOptions": {
-    "types": ["cypress", "cypress-axe"]
-  },
-  "include": ["."],
 }
