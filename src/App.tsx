@@ -1,22 +1,3 @@
-import { Activity, useState } from 'react';
-
-import BarLoader from './BarLoader';
-import Help from './Help';
-import Settings from './Settings';
-
-import {
-  PLATE_SIZES_KILOS,
-  PLATE_SIZES_POUNDS
-} from './constants.ts';
-
-import {
-  ActionIcon,
-  Button,
-  Modal,
-  SegmentedControl,
-} from '@mantine/core';
-import { IconBrandGithubFilled, IconHelpCircleFilled, IconSettingsFilled } from '@tabler/icons-react';
-
 // Required for other components
 import '@mantine/core/styles/CloseButton.css';
 import '@mantine/core/styles/FloatingIndicator.css';
@@ -37,6 +18,26 @@ import '@mantine/core/styles/Stack.css';
 
 // Needs to go after the mantine CSS imports
 import './App.css';
+
+import BarLoader from './BarLoader';
+import Help from './Help';
+import Settings from './Settings';
+
+import {
+  ActionIcon,
+  Button,
+  Modal,
+  SegmentedControl,
+} from '@mantine/core';
+
+import { Activity, useState } from 'react';
+
+import { IconBrandGithubFilled, IconHelpCircleFilled, IconSettingsFilled } from '@tabler/icons-react';
+
+import {
+  PLATE_SIZES_KILOS,
+  PLATE_SIZES_POUNDS
+} from './constants.ts';
 
 const YEAR = new Date().getFullYear();
 
@@ -260,27 +261,27 @@ function App() {
     <>
       <Modal
         opened={showModal}
-        title="Hello!"
+        title='Hello!'
         centered
         onClose={() => { setShowModal(false); window.localStorage.setItem('modal-dismissed', 'true'); }}
       >
-        <div className="modal-section">
+        <div className='modal-section'>
           Thank you for using this calculator! There are some <b>new features</b> you should know about.
         </div>
 
-        <div className="modal-section">
+        <div className='modal-section'>
           If you click on the settings button (the gear icon) in the bottom right,
           you can now customize what plates the loader will use and whether to use
           kilos or pounds and collars. <b>These settings will be saved in your
           browser for next time.</b>
         </div>
 
-        <div className="modal-section">
+        <div className='modal-section'>
           Feel free to reach out with any bugs or suggestions! Check the new help
           section by clicking the question mark icon in the bottom right for details.
         </div>
 
-        <div className="modal-close">
+        <div className='modal-close'>
           <Button
             onClick={() => { setShowModal(false); window.localStorage.setItem('modal-dismissed', 'true'); }}
           >
@@ -513,31 +514,30 @@ function App() {
 
           <div>
             <ActionIcon
-              component="a"
-              href="https://github.com/zack/rpe"
-              variant="filled"
-              radius="xl"
-              aria-label="Help"
+              component='a'
+              href='https://github.com/zack/rpe'
+              variant='filled'
+              radius='xl'
+              aria-label='Help'
 
             >
               <IconBrandGithubFilled />
             </ActionIcon>
 
             <ActionIcon
-              aria-label="Help"
+              aria-label='Help'
               onClick={ () => setView(view === View.HELP ? View.DEFAULT : View.HELP) }
-              radius="xl"
-              variant={ view === View.HELP ? "white" : "filled" }
+              radius='xl'
+              variant={ view === View.HELP ? 'white' : 'filled' }
             >
               <IconHelpCircleFilled/>
             </ActionIcon>
 
             <ActionIcon
-              aria-label="Settings"
+              aria-label='Settings'
               onClick={ () => setView(view === View.SETTINGS ? View.DEFAULT : View.SETTINGS) }
-              radius="xl"
-              variant={ view === View.SETTINGS ? "white" : "filled" }
-
+              radius='xl'
+              variant={ view === View.SETTINGS ? 'white' : 'filled' }
             >
               <IconSettingsFilled />
             </ActionIcon>

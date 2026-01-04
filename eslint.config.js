@@ -1,23 +1,50 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import tseslint from 'typescript-eslint'
-import { defineConfig, globalIgnores } from 'eslint/config'
+import eslint from '@eslint/js';
+import prettier from 'eslint-config-prettier/flat';
+import react from 'eslint-plugin-react';
+import reactCompiler from 'eslint-plugin-react-compiler';
+import stylistic from '@stylistic/eslint-plugin'
+import tsParser from '@typescript-eslint/parser';
+import tseslint from 'typescript-eslint';
+
+import { defineConfig, globalIgnores } from 'eslint/config';
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  prettier,
+
+  globalIgnores([
+    'build/**',
+    'out/**',
+  ]),
+
   {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      js.configs.recommended,
-      tseslint.configs.recommended,
-      reactHooks.configs.flat.recommended,
-      reactRefresh.configs.vite,
-    ],
+    plugins: {
+      react,
+      '@stylistic': stylistic,
+    },
+
     languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser,
+      globals: {},
+      parser: tsParser,
+    },
+
+    rules: {
+      'react-compiler/react-compiler': 'error',
+      'sort-imports': ['error', {
+        memberSyntaxSortOrder: ['none', 'all', 'single', 'multiple'],
+      }],
+      'no-console': ['error'],
+      '@/quotes': ['error', 'single', {
+        avoidEscape: true,
+      }],
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': ['error', {
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+      }],
     },
   },
-])
+
+  eslint.configs.recommended,
+  tseslint.configs.recommended,
+  reactCompiler.configs.recommended,
+]);

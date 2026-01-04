@@ -1,0 +1,33 @@
+name: 'Cypress'
+
+run-name: ${{ github.actor }} is running Cypress tests
+on:
+  pull_request:
+
+jobs:
+  cypress:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/krypton"
+      - run: node -v
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v6.8.0
+        timeout-minutes: 10
+        env:
+          ELECTRONC_EXTRA_LAUNCH_ARGS: '--disable-gpu'
+        with:
+          browser: chrome
+          video: false
+          build: npm run build
+          start: npm run preview -- --port 5173
+          wait-on: 'http://localhost:5173'
+          wait-on-timeout: 90
+          spec: |
+            cypress/e2e/**/*.cy.ts

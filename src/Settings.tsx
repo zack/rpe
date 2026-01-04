@@ -1,15 +1,14 @@
 import {
-  PLATE_SIZES_KILOS,
-  PLATE_SIZES_POUNDS
-} from './constants.ts';
-
-import {
   Button,
   Checkbox,
   SegmentedControl,
   Stack,
 } from '@mantine/core';
 
+import {
+  PLATE_SIZES_KILOS,
+  PLATE_SIZES_POUNDS
+} from './constants.ts';
 
 type SettingsProps = {
   defaultCollars: boolean;
