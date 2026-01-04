@@ -26,8 +26,8 @@ jobs:
           browser: chrome
           video: false
           build: npm run build
-          start: npm run start
-          wait-on: 'http://localhost:3000'
+          start: npm run preview
+          wait-on: 'http://localhost:5173'
           wait-on-timeout: 90
           spec: |
             cypress/e2e/**/*.cy.ts
