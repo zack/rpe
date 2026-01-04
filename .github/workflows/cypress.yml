@@ -26,7 +26,7 @@ jobs:
           browser: chrome
           video: false
           build: npm run build
-          start: npm run preview
+          start: npm run preview -- --port 5173
           wait-on: 'http://localhost:5173'
           wait-on-timeout: 90
           spec: |
