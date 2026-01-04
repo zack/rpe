@@ -13,6 +13,7 @@ export default defineConfig([
 
   globalIgnores([
     'build/**',
+    'dist/**',
     'out/**',
   ]),
 
@@ -45,6 +46,6 @@ export default defineConfig([
   },
 
   eslint.configs.recommended,
-  tseslint.configs.recommended,
   reactCompiler.configs.recommended,
+  tseslint.configs.recommended,
 ]);

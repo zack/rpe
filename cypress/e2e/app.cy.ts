@@ -1,5 +1,3 @@
-import 'cypress';
-
 describe('RPE Calculator App E2E Tests', () => {
   beforeEach(() => {
     cy.visit('http://localhost:5173/');
