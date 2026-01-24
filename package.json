@@ -44,7 +44,7 @@
     "@types/cypress": "^0.1.6",
     "@types/jest": "^30.0.0",
     "@types/mocha": "^10.0.10",
-    "@types/node": "^25.0.9",
+    "@types/node": "^25.0.10",
     "@typescript-eslint/eslint-plugin": "^8.53.0",
     "@typescript-eslint/parser": "^8.52.0",
     "@vitejs/plugin-react": "^5.1.1",
@@ -64,7 +64,7 @@
     "prettier": "npm:@btmills/prettier@^3.2.5",
     "tsx": "^4.21.0",
     "typescript": "~5.9.3",
-    "typescript-eslint": "^8.51.0",
+    "typescript-eslint": "^8.53.1",
     "vite": "^7.2.7",
     "vite-plugin-pwa": "^1.2.0"
   },
