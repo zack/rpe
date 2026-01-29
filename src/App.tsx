@@ -32,13 +32,13 @@ import {
 
 import { Activity, useState } from 'react';
 
-import { IconBrandGithubFilled, IconHelpCircleFilled, IconSettingsFilled } from '@tabler/icons-react';
-
 import {
   DEFAULT_ROUNDING,
   PLATE_SIZES_KILOS,
   PLATE_SIZES_POUNDS,
 } from './constants.ts';
+
+import { IconBrandGithubFilled, IconHelpCircleFilled, IconSettingsFilled } from '@tabler/icons-react';
 
 const YEAR = new Date().getFullYear();
 
