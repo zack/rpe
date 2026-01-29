@@ -1,6 +1,7 @@
 import {
   Button,
   Checkbox,
+  NativeSelect,
   SegmentedControl,
   Stack,
 } from '@mantine/core';
@@ -15,11 +16,13 @@ type SettingsProps = {
   defaultKiloPlates: number[];
   defaultKilos: boolean;
   defaultPoundPlates: number[];
+  defaultRounding: number;
   handleClose: () => void;
   handleSetDefaultCollars: (value: boolean) => void,
   handleSetDefaultKiloPlates: (value: string[]) => void,
   handleSetDefaultKilos: (value: boolean) => void,
   handleSetDefaultPoundPlates: (value: string[]) => void,
+  handleSetDefaultRounding: (value: number) => void,
 }
 
 const Settings = ({
@@ -27,11 +30,13 @@ const Settings = ({
   defaultKiloPlates,
   defaultKilos,
   defaultPoundPlates,
+  defaultRounding,
   handleClose,
   handleSetDefaultCollars,
   handleSetDefaultKiloPlates,
   handleSetDefaultKilos,
   handleSetDefaultPoundPlates,
+  handleSetDefaultRounding,
 } : SettingsProps) => {
   return (
     <>
@@ -42,7 +47,13 @@ const Settings = ({
 
         <div className="settings-defaults">
           <div>
-            <b>Collars:{' '}</b>
+            <label
+              className='label'
+              htmlFor='collars'
+              style={{ marginRight: '6px' }}
+            >
+              Collars
+            </label>
             <SegmentedControl
               color='#1779CE'
               size='xs'
@@ -50,14 +61,20 @@ const Settings = ({
               value={defaultCollars ? 'Collars' : 'None'}
               onChange={(value) => handleSetDefaultCollars(value === 'Collars')}
               data={[
-                { value: 'Collars', label: 'Collars' },
-              { value: 'None', label: 'None' },
+                { value: 'Collars', label: 'Yes' },
+                { value: 'None', label: 'None' },
               ]}
             />
           </div>
 
           <div>
-            <b>Units:{' '}</b>
+            <label
+              className='label'
+              htmlFor='units'
+              style={{ marginRight: '6px' }}
+            >
+              Units
+            </label>
             <SegmentedControl
               color='#1779CE'
               size='xs'
@@ -66,9 +83,32 @@ const Settings = ({
               onChange={(value) => handleSetDefaultKilos(value === 'Kilos')}
               data={[
                 { value: 'Kilos', label: 'Kilos' },
-              { value: 'Pounds', label: 'Pounds' },
+                { value: 'Pounds', label: 'Pounds' },
               ]}
             />
+          </div>
+
+          <div>
+            <label
+              className='label'
+              htmlFor='rounding'
+              style={{ marginRight: '6px' }}
+            >
+              Rounding
+            </label>
+            <NativeSelect
+              className='rounding'
+              id='rounding'
+              size='xs'
+              name='rounding'
+              onChange={(e) => { handleSetDefaultRounding(Number(e.target.value)); }}
+              value={defaultRounding}
+            >
+              <option value='5'> 5.0 </option>
+              <option value='2.5'> 2.5 </option>
+              <option value='1'> 1.0 </option>
+              <option value='0.01'> 0.01 </option>
+            </NativeSelect>
           </div>
         </div>
 
@@ -106,11 +146,11 @@ const Settings = ({
 
       <div className="help-actions">
         <Button
-        className="help-close"
-        color='#1779CE'
-        onClick={handleClose}
+          className="help-close"
+          color='#1779CE'
+          onClick={handleClose}
         >
-        Close settings
+          Close settings
         </Button>
       </div>
     </>

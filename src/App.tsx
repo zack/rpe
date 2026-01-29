@@ -32,12 +32,13 @@ import {
 
 import { Activity, useState } from 'react';
 
-import { IconBrandGithubFilled, IconHelpCircleFilled, IconSettingsFilled } from '@tabler/icons-react';
-
 import {
+  DEFAULT_ROUNDING,
   PLATE_SIZES_KILOS,
-  PLATE_SIZES_POUNDS
+  PLATE_SIZES_POUNDS,
 } from './constants.ts';
+
+import { IconBrandGithubFilled, IconHelpCircleFilled, IconSettingsFilled } from '@tabler/icons-react';
 
 const YEAR = new Date().getFullYear();
 
@@ -126,7 +127,7 @@ function App() {
   const [startingRPEFocused, setStartingRPEFocused] = useState(false);
   const [targetRPEFocused, setTargetRPEFocused] = useState(false);
 
-  const [rounding, setRounding] = useState(5);
+  const [rounding, setRounding] = useState(() => Number(window.localStorage.getItem('rounding') ?? `${DEFAULT_ROUNDING}`));
 
   const [e1RMMultiplier, setE1RMMultiplier] = useState('100');
 
@@ -142,6 +143,8 @@ function App() {
 
   const [defaultKiloPlates, setDefaultKiloPlates] = useState(() => JSON.parse(window.localStorage.getItem('plates-kilos') || JSON.stringify(PLATE_SIZES_KILOS)));
   const [defaultPoundPlates, setDefaultPoundPlates] = useState(() => JSON.parse(window.localStorage.getItem('plates-pounds') || JSON.stringify(PLATE_SIZES_POUNDS)));
+
+  const [defaultRounding, setDefaultRounding] = useState(() => Number(JSON.parse(window.localStorage.getItem('rounding') ?? JSON.stringify(DEFAULT_ROUNDING))));
 
   const startingWeightNum = Number(startingWeight);
   const startingRPENum = Number(startingRPE);
@@ -169,6 +172,11 @@ function App() {
     const arr = values.map((v) => Number(v));
     setDefaultPoundPlates(arr);
     window.localStorage.setItem('plates-pounds', JSON.stringify(arr));
+  }
+
+  function handleSetDefaultRounding(value: number) {
+    setDefaultRounding(value);
+    window.localStorage.setItem('rounding', `${value}`);
   }
 
   const errors = {
@@ -304,11 +312,13 @@ function App() {
           defaultKiloPlates={defaultKiloPlates}
           defaultKilos={defaultKilos}
           defaultPoundPlates={defaultPoundPlates}
+          defaultRounding={defaultRounding}
           handleClose={() => setView(View.DEFAULT)}
           handleSetDefaultCollars={handleSetDefaultCollars}
           handleSetDefaultKiloPlates={handleSetDefaultKiloPlates}
           handleSetDefaultKilos={handleSetDefaultKilos}
           handleSetDefaultPoundPlates={handleSetDefaultPoundPlates}
+          handleSetDefaultRounding={handleSetDefaultRounding}
         />
       </Activity>
 
@@ -429,7 +439,6 @@ function App() {
             htmlFor='rounding'
             style={{ marginRight: '6px' }}
           >
-            {' '}
             Target Weight Rounding:{' '}
           </label>
           <select
@@ -438,6 +447,7 @@ function App() {
             name='rounding'
             onChange={(e) => { setRounding(Number(e.target.value)); setOverrideBarWeight(true); }}
             style={{ paddingLeft: '14px' }}
+            value={rounding}
           >
             <option value='5'> 5.0 </option>
             <option value='2.5'> 2.5 </option>

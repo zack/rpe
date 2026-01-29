@@ -48,6 +48,10 @@ body {
   margin-bottom: 20px;
 }
 
+.settings .label {
+  font-weight: bold;
+}
+
 .plate-choices {
   display: flex;
   justify-content: space-between;
