@@ -18,6 +18,15 @@ export default defineConfig([
   ]),
 
   {
+    // Fix for ESLint 10+: eslint-plugin-react uses context.getFilename() (legacy API)
+    // which was removed in ESLint 10 flat config. Declaring the version explicitly
+    // prevents the plugin from trying to auto-detect it and failing.
+    settings: {
+      react: {
+        version: '19',
+      },
+    },
+
     plugins: {
       react,
       '@stylistic': stylistic,
