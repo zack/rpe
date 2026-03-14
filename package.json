@@ -30,7 +30,7 @@
   "dependencies": {
     "@mantine/core": "^8.3.14",
     "@mantine/hooks": "^8.3.12",
-    "@tabler/icons-react": "^3.39.0",
+    "@tabler/icons-react": "^3.40.0",
     "@types/react": "19.2.4",
     "@types/react-dom": "19.2.3",
     "@vercel/analytics": "^1.6.1",
