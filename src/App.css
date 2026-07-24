@@ -386,7 +386,7 @@ h2 {
 
 .input-row label {
   background-color: #eeeeee;
-  border-top: 2px solid #cccccc;
+  border-top: 2px solid #767676;
   display: inline-block;
   font-weight: bold;
   height: 40px;
@@ -397,7 +397,7 @@ h2 {
 }
 
 .input-row.border-bottom .input-container label {
-  border-bottom: 2px solid #cccccc;
+  border-bottom: 2px solid #767676;
 }
 
 input.text {
@@ -405,7 +405,7 @@ input.text {
   -webkit-appearance: none;
   -webkit-border-radius: 0;
   background-color: #f7f7f7;
-  border: 2px solid #cccccc;
+  border: 2px solid #767676;
   border-bottom: 0;
   border-right: 0;
   color: #454545;
@@ -452,7 +452,7 @@ input.e1rm-multiplier {
 }
 
 .input-row.border-bottom .input-container input {
-  border-bottom: 2px solid #cccccc;
+  border-bottom: 2px solid #767676;
 }
 
 .input-row.border-bottom .input-container input:focus-visible {
