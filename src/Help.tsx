@@ -2,11 +2,26 @@ import {
   Button,
 } from '@mantine/core';
 
-const Help = ({ handleClose } : { handleClose: () => void }) => {
+import { useEffect, useRef } from 'react';
+
+type HelpProps = {
+  handleClose: () => void;
+  isActive: boolean;
+};
+
+const Help = ({ handleClose, isActive } : HelpProps) => {
+  const headingRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    if (isActive) {
+      headingRef.current?.focus();
+    }
+  }, [isActive]);
+
   return (
     <>
       <div className="help-content">
-        <h2>How do I use this tool?</h2>
+        <h2 ref={headingRef} tabIndex={-1}>How do I use this tool?</h2>
         <ul>
           <li> Input the weight, reps, and your RPE for a given set.</li>
           <li> Input your desired reps and RPE for your next set.</li>

@@ -11,6 +11,8 @@ import {
   PLATE_SIZES_POUNDS
 } from './constants.ts';
 
+import { useEffect, useRef } from 'react';
+
 type SettingsProps = {
   defaultCollars: boolean;
   defaultKiloPlates: number[];
@@ -23,6 +25,7 @@ type SettingsProps = {
   handleSetDefaultKilos: (value: boolean) => void,
   handleSetDefaultPoundPlates: (value: string[]) => void,
   handleSetDefaultRounding: (value: number) => void,
+  isActive: boolean;
 }
 
 const Settings = ({
@@ -37,11 +40,20 @@ const Settings = ({
   handleSetDefaultKilos,
   handleSetDefaultPoundPlates,
   handleSetDefaultRounding,
+  isActive,
 } : SettingsProps) => {
+  const headingRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    if (isActive) {
+      headingRef.current?.focus();
+    }
+  }, [isActive]);
+
   return (
     <>
       <div className="settings">
-        <h2> Defaults </h2>
+        <h2 ref={headingRef} tabIndex={-1}> Defaults </h2>
 
         <div className="settings-explanation"> These are the settings that will bet set every time you open the application.</div>
 
@@ -49,13 +61,14 @@ const Settings = ({
           <div>
             <label
               className='label'
-              htmlFor='collars'
+              id='collars-label'
               style={{ marginRight: '6px' }}
             >
               Collars
             </label>
             <SegmentedControl
-              color='#1779CE'
+              aria-labelledby='collars-label'
+              color='#1568b0'
               size='xs'
               radius='xl'
               value={defaultCollars ? 'Collars' : 'None'}
@@ -70,13 +83,14 @@ const Settings = ({
           <div>
             <label
               className='label'
-              htmlFor='units'
+              id='units-label'
               style={{ marginRight: '6px' }}
             >
               Units
             </label>
             <SegmentedControl
-              color='#1779CE'
+              aria-labelledby='units-label'
+              color='#1568b0'
               size='xs'
               radius='xl'
               value={defaultKilos ? 'Kilos' : 'Pounds'}
@@ -91,14 +105,14 @@ const Settings = ({
           <div>
             <label
               className='label'
-              htmlFor='rounding'
+              htmlFor='default-rounding'
               style={{ marginRight: '6px' }}
             >
               Rounding
             </label>
             <NativeSelect
               className='rounding'
-              id='rounding'
+              id='default-rounding'
               size='xs'
               name='rounding'
               onChange={(e) => { handleSetDefaultRounding(Number(e.target.value)); }}
