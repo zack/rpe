@@ -2,6 +2,12 @@ describe('RPE Calculator App E2E Tests', () => {
   beforeEach(() => {
     cy.visit('http://localhost:5173/');
     cy.get('.modal-close button').click();
+    // Wait for the modal's exit transition to finish and fully unmount.
+    // Tabbing while its close button is still being removed from the DOM
+    // is a race: depending on exact timing, that Tab press either lands on
+    // <body> (button already gone) or is swallowed (button still there),
+    // which silently shifts every subsequent Tab target by one field.
+    cy.get('[role="dialog"]').should('not.exist');
   });
 
   it('should render the app correctly', () => {
@@ -10,7 +16,6 @@ describe('RPE Calculator App E2E Tests', () => {
 
   describe.only('RPE Calculations and Results', () => {
     it('should calculate E1RM and target weight correctly', () => {
-      cy.press(Cypress.Keyboard.Keys.TAB);
       cy.press(Cypress.Keyboard.Keys.TAB);
       cy.focused().type('234.5');
       cy.press(Cypress.Keyboard.Keys.TAB);

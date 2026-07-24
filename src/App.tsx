@@ -30,7 +30,7 @@ import {
   SegmentedControl,
 } from '@mantine/core';
 
-import { Activity, useState } from 'react';
+import { Activity, useRef, useState } from 'react';
 
 import {
   DEFAULT_ROUNDING,
@@ -115,6 +115,8 @@ const getRPECoefficient = (reps: number, rpe: number) => {
 
 function App() {
   const [view, setView] = useState<View>(View.DEFAULT);
+  const helpButtonRef = useRef<HTMLButtonElement>(null);
+  const settingsButtonRef = useRef<HTMLButtonElement>(null);
   const [showModal, setShowModal] = useState((() => window.localStorage.getItem('modal-dismissed') !== 'true'));
 
   const [startingWeight, setStartingWeight] = useState('');
@@ -298,12 +300,16 @@ function App() {
         </div>
       </Modal>
 
-      <div className='header'>
+      <header className='header'>
         <h1> RPE Calculator </h1>
-      </div>
+      </header>
 
+      <main>
       <Activity mode={view === View.HELP ? 'visible' : 'hidden'}>
-        <Help handleClose={() => setView(View.DEFAULT)} />
+        <Help
+          isActive={view === View.HELP}
+          handleClose={() => { setView(View.DEFAULT); helpButtonRef.current?.focus(); }}
+        />
       </Activity>
 
       <Activity mode={view === View.SETTINGS ? 'visible' : 'hidden'}>
@@ -313,7 +319,8 @@ function App() {
           defaultKilos={defaultKilos}
           defaultPoundPlates={defaultPoundPlates}
           defaultRounding={defaultRounding}
-          handleClose={() => setView(View.DEFAULT)}
+          isActive={view === View.SETTINGS}
+          handleClose={() => { setView(View.DEFAULT); settingsButtonRef.current?.focus(); }}
           handleSetDefaultCollars={handleSetDefaultCollars}
           handleSetDefaultKiloPlates={handleSetDefaultKiloPlates}
           handleSetDefaultKilos={handleSetDefaultKilos}
@@ -332,6 +339,8 @@ function App() {
             <label htmlFor='starting-weight'> Weight </label>
 
             <input
+              aria-describedby='starting-weight-error'
+              aria-invalid={!!errors.startingWeight}
               className='text'
               id='starting-weight'
               inputMode='decimal'
@@ -344,7 +353,7 @@ function App() {
             />
           </div>
 
-          <div className='error'>{errors.startingWeight}</div>
+          <div className='error' id='starting-weight-error'>{errors.startingWeight}</div>
         </div>
 
         <div className={`input-row ${errors.startingReps && 'error'}`}>
@@ -352,6 +361,8 @@ function App() {
             <label htmlFor='starting-reps'> Reps </label>
 
             <input
+              aria-describedby='starting-reps-error'
+              aria-invalid={!!errors.startingReps}
               className='text'
               id='starting-reps'
               inputMode='decimal'
@@ -363,7 +374,7 @@ function App() {
             />
           </div>
 
-          <div className='error'>{errors.startingReps}</div>
+          <div className='error' id='starting-reps-error'>{errors.startingReps}</div>
         </div>
 
         <div
@@ -373,6 +384,8 @@ function App() {
             <label htmlFor='starting-rpe'> RPE </label>
 
             <input
+              aria-describedby='starting-rpe-error'
+              aria-invalid={!!errors.startingRPE}
               className='text'
               id='starting-rpe'
               inputMode='decimal'
@@ -386,7 +399,7 @@ function App() {
             />
           </div>
 
-          <div className='error'>{errors.startingRPE}</div>
+          <div className='error' id='starting-rpe-error'>{errors.startingRPE}</div>
         </div>
 
         <div className='subheader'>
@@ -398,6 +411,8 @@ function App() {
             <label htmlFor='target-reps'> Reps </label>
 
             <input
+              aria-describedby='target-reps-error'
+              aria-invalid={!!errors.targetReps}
               className='text'
               id='target-reps'
               inputMode='decimal'
@@ -409,7 +424,7 @@ function App() {
             />
           </div>
 
-          <div className='error'>{errors.targetReps}</div>
+          <div className='error' id='target-reps-error'>{errors.targetReps}</div>
         </div>
 
         <div className={`input-row ${errors.targetRPE && 'error'}`}>
@@ -417,6 +432,8 @@ function App() {
             <label htmlFor='target-rpe'> RPE </label>
 
             <input
+              aria-describedby='target-rpe-error'
+              aria-invalid={!!errors.targetRPE}
               className='text'
               id='target-rpe'
               inputMode='decimal'
@@ -430,7 +447,7 @@ function App() {
             />
           </div>
 
-          <div className='error'>{errors.targetRPE}</div>
+          <div className='error' id='target-rpe-error'>{errors.targetRPE}</div>
         </div>
 
         <div className='options one'>
@@ -456,7 +473,7 @@ function App() {
           </select>
         </div>
 
-        <div className='results'>
+        <div aria-atomic='true' className='results' role='status'>
           <div className='target'>
             {' '}
             Target weight: {showTargetWeight
@@ -483,7 +500,8 @@ function App() {
 
         <div className='options two'>
           <SegmentedControl
-            color='#1779CE'
+            aria-label='Collars'
+            color='#1568b0'
             size='xs'
             radius='xl'
             value={usingCollars ? 'Collars' : 'None'}
@@ -495,7 +513,8 @@ function App() {
           />
 
           <SegmentedControl
-            color='#1779CE'
+            aria-label='Units'
+            color='#1568b0'
             size='xs'
             radius='xl'
             value={usingKilos ? 'Kilos' : 'Pounds'}
@@ -516,8 +535,9 @@ function App() {
           usingKilos={usingKilos}
         />
       </Activity>
+      </main>
 
-      <div className='footer'>
+      <footer className='footer'>
         <div className='footer-inner'>
           <div className='attribution'>
             © {YEAR} Zack Youngren
@@ -529,8 +549,7 @@ function App() {
               href='https://github.com/zack/rpe'
               variant='filled'
               radius='xl'
-              aria-label='Help'
-
+              aria-label='View source on GitHub'
             >
               <IconBrandGithubFilled />
             </ActionIcon>
@@ -539,6 +558,7 @@ function App() {
               aria-label='Help'
               onClick={ () => setView(view === View.HELP ? View.DEFAULT : View.HELP) }
               radius='xl'
+              ref={helpButtonRef}
               variant={ view === View.HELP ? 'white' : 'filled' }
             >
               <IconHelpCircleFilled/>
@@ -548,13 +568,14 @@ function App() {
               aria-label='Settings'
               onClick={ () => setView(view === View.SETTINGS ? View.DEFAULT : View.SETTINGS) }
               radius='xl'
+              ref={settingsButtonRef}
               variant={ view === View.SETTINGS ? 'white' : 'filled' }
             >
               <IconSettingsFilled />
             </ActionIcon>
           </div>
         </div>
-      </div>
+      </footer>
     </>
   );
 }
