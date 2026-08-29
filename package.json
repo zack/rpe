@@ -32,7 +32,7 @@
     "@mantine/hooks": "^9.5.2",
     "@tabler/icons-react": "^3.46.0",
     "@types/react": "19.2.18",
-    "@types/react-dom": "19.2.4",
+    "@types/react-dom": "19.2.5",
     "@vercel/analytics": "^2.0.1",
     "cypress-real-events": "^1.15.0",
     "react": "^19.2.0",
@@ -73,7 +73,7 @@
   },
   "overrides": {
     "@types/react": "19.2.18",
-    "@types/react-dom": "19.2.4",
+    "@types/react-dom": "19.2.5",
     "vite": "^8.1.5"
   }
 }
