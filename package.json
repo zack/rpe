@@ -28,8 +28,8 @@
     ]
   },
   "dependencies": {
-    "@mantine/core": "^8.3.14",
-    "@mantine/hooks": "^8.3.12",
+    "@mantine/core": "^9.5.2",
+    "@mantine/hooks": "^9.5.2",
     "@tabler/icons-react": "^3.46.0",
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.4",
