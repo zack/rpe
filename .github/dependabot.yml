@@ -11,3 +11,10 @@ updates:
       interval: "weekly"
       day: "saturday"
       time: "01:00"
+    groups:
+      mantine:
+        # core and hooks are versioned in lockstep upstream and core pins an
+        # exact peer dependency on hooks, so bumping them separately breaks
+        # the peer resolution (see PR #143)
+        patterns:
+          - "@mantine/*"
