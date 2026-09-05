@@ -1,13 +1,13 @@
 import '@mantine/core/styles/baseline.css';
 import '@mantine/core/styles/default-css-variables.css';
 import '@mantine/core/styles/global.css';
-
-import { Analytics } from '@vercel/analytics/react';
-import App from './App.tsx';
 import { MantineProvider } from '@mantine/core';
+import { createTheme } from '@mantine/core';
+import { Analytics } from '@vercel/analytics/react';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { createTheme } from '@mantine/core';
+
+import App from './App.tsx';
 
 export const theme = createTheme({
   fontFamily: 'RobotoCondensed, Arial Narrow, Arial, sans-serif',

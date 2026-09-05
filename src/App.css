@@ -55,7 +55,7 @@ body {
 .plate-choices {
   display: flex;
   justify-content: space-between;
-  margin: 10px 10px 0px 10px
+  margin: 10px 10px 0px 10px;
 }
 
 .plate-choices .checkbox.pounds {
@@ -349,7 +349,8 @@ input.bar-weight {
   margin-left: 10px;
 }
 
-.footer button, a {
+.footer button,
+a {
   margin-top: 3px;
   margin-right: 10px;
 }

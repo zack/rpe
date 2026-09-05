@@ -11,7 +11,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "lts/krypton"
+          node-version: 'lts/krypton'
       - run: node -v
 
       - name: Checkout

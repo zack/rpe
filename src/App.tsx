@@ -7,7 +7,6 @@ import '@mantine/core/styles/ModalBase.css';
 import '@mantine/core/styles/Overlay.css';
 import '@mantine/core/styles/Paper.css';
 import '@mantine/core/styles/UnstyledButton.css';
-
 // For components that are actually used directly
 import '@mantine/core/styles/ActionIcon.css';
 import '@mantine/core/styles/Button.css';
@@ -15,30 +14,24 @@ import '@mantine/core/styles/Checkbox.css';
 import '@mantine/core/styles/Modal.css';
 import '@mantine/core/styles/SegmentedControl.css';
 import '@mantine/core/styles/Stack.css';
-
 // Needs to go after the mantine CSS imports
 import './App.css';
-
-import BarLoader from './BarLoader';
-import Help from './Help';
-import Settings from './Settings';
-
+import { ActionIcon, Button, Modal, SegmentedControl } from '@mantine/core';
 import {
-  ActionIcon,
-  Button,
-  Modal,
-  SegmentedControl,
-} from '@mantine/core';
-
+  IconBrandGithubFilled,
+  IconHelpCircleFilled,
+  IconSettingsFilled,
+} from '@tabler/icons-react';
 import { Activity, useRef, useState } from 'react';
 
+import BarLoader from './BarLoader';
 import {
   DEFAULT_ROUNDING,
   PLATE_SIZES_KILOS,
   PLATE_SIZES_POUNDS,
 } from './constants.ts';
-
-import { IconBrandGithubFilled, IconHelpCircleFilled, IconSettingsFilled } from '@tabler/icons-react';
+import Help from './Help';
+import Settings from './Settings';
 
 const YEAR = new Date().getFullYear();
 
@@ -81,7 +74,9 @@ function getPlates(
   const largestPossiblePlate = (
     remainingWeight: number,
   ): number | undefined => {
-    return plateSizes.sort((a,b) => b-a).find((plate) => plate * 2 <= remainingWeight);
+    return plateSizes
+      .sort((a, b) => b - a)
+      .find((plate) => plate * 2 <= remainingWeight);
   };
 
   const plates: number[] = [];
@@ -117,7 +112,9 @@ function App() {
   const [view, setView] = useState<View>(View.DEFAULT);
   const helpButtonRef = useRef<HTMLButtonElement>(null);
   const settingsButtonRef = useRef<HTMLButtonElement>(null);
-  const [showModal, setShowModal] = useState((() => window.localStorage.getItem('modal-dismissed') !== 'true'));
+  const [showModal, setShowModal] = useState(
+    () => window.localStorage.getItem('modal-dismissed') !== 'true',
+  );
 
   const [startingWeight, setStartingWeight] = useState('');
   const [startingReps, setStartingReps] = useState(0);
@@ -129,24 +126,51 @@ function App() {
   const [startingRPEFocused, setStartingRPEFocused] = useState(false);
   const [targetRPEFocused, setTargetRPEFocused] = useState(false);
 
-  const [rounding, setRounding] = useState(() => Number(window.localStorage.getItem('rounding') ?? `${DEFAULT_ROUNDING}`));
+  const [rounding, setRounding] = useState(() =>
+    Number(window.localStorage.getItem('rounding') ?? `${DEFAULT_ROUNDING}`),
+  );
 
   const [e1RMMultiplier, setE1RMMultiplier] = useState('100');
 
-  const [usingCollars, setUsingCollars] = useState(() => window.localStorage.getItem('collars') === 'true');
-  const [usingKilos, setUsingKilos] = useState((() => window.localStorage.getItem('kilos') === 'true'));
+  const [usingCollars, setUsingCollars] = useState(
+    () => window.localStorage.getItem('collars') === 'true',
+  );
+  const [usingKilos, setUsingKilos] = useState(
+    () => window.localStorage.getItem('kilos') === 'true',
+  );
 
   const [barWeight, setBarWeight] = useState('');
   const [overrideBarWeight, setOverrideBarWeight] = useState(false);
   const [barWeightToE1RM, setBarWeightToE1RM] = useState(false);
 
-  const [defaultCollars, setDefaultCollars] = useState(() => window.localStorage.getItem('collars') === 'true');
-  const [defaultKilos, setDefaultKilos] = useState(() => window.localStorage.getItem('kilos') === 'true');
+  const [defaultCollars, setDefaultCollars] = useState(
+    () => window.localStorage.getItem('collars') === 'true',
+  );
+  const [defaultKilos, setDefaultKilos] = useState(
+    () => window.localStorage.getItem('kilos') === 'true',
+  );
 
-  const [defaultKiloPlates, setDefaultKiloPlates] = useState(() => JSON.parse(window.localStorage.getItem('plates-kilos') || JSON.stringify(PLATE_SIZES_KILOS)));
-  const [defaultPoundPlates, setDefaultPoundPlates] = useState(() => JSON.parse(window.localStorage.getItem('plates-pounds') || JSON.stringify(PLATE_SIZES_POUNDS)));
+  const [defaultKiloPlates, setDefaultKiloPlates] = useState(() =>
+    JSON.parse(
+      window.localStorage.getItem('plates-kilos')
+        || JSON.stringify(PLATE_SIZES_KILOS),
+    ),
+  );
+  const [defaultPoundPlates, setDefaultPoundPlates] = useState(() =>
+    JSON.parse(
+      window.localStorage.getItem('plates-pounds')
+        || JSON.stringify(PLATE_SIZES_POUNDS),
+    ),
+  );
 
-  const [defaultRounding, setDefaultRounding] = useState(() => Number(JSON.parse(window.localStorage.getItem('rounding') ?? JSON.stringify(DEFAULT_ROUNDING))));
+  const [defaultRounding, setDefaultRounding] = useState(() =>
+    Number(
+      JSON.parse(
+        window.localStorage.getItem('rounding')
+          ?? JSON.stringify(DEFAULT_ROUNDING),
+      ),
+    ),
+  );
 
   const startingWeightNum = Number(startingWeight);
   const startingRPENum = Number(startingRPE);
@@ -273,27 +297,35 @@ function App() {
         opened={showModal}
         title='Hello!'
         centered
-        onClose={() => { setShowModal(false); window.localStorage.setItem('modal-dismissed', 'true'); }}
+        onClose={() => {
+          setShowModal(false);
+          window.localStorage.setItem('modal-dismissed', 'true');
+        }}
       >
         <div className='modal-section'>
-          Thank you for using this calculator! There are some <b>new features</b> you should know about.
+          Thank you for using this calculator! There are some{' '}
+          <b>new features</b> you should know about.
         </div>
 
         <div className='modal-section'>
-          If you click on the settings button (the gear icon) in the bottom right,
-          you can now customize what plates the loader will use and whether to use
-          kilos or pounds and collars. <b>These settings will be saved in your
-          browser for next time.</b>
+          If you click on the settings button (the gear icon) in the bottom
+          right, you can now customize what plates the loader will use and
+          whether to use kilos or pounds and collars.{' '}
+          <b>These settings will be saved in your browser for next time.</b>
         </div>
 
         <div className='modal-section'>
-          Feel free to reach out with any bugs or suggestions! Check the new help
-          section by clicking the question mark icon in the bottom right for details.
+          Feel free to reach out with any bugs or suggestions! Check the new
+          help section by clicking the question mark icon in the bottom right
+          for details.
         </div>
 
         <div className='modal-close'>
           <Button
-            onClick={() => { setShowModal(false); window.localStorage.setItem('modal-dismissed', 'true'); }}
+            onClick={() => {
+              setShowModal(false);
+              window.localStorage.setItem('modal-dismissed', 'true');
+            }}
           >
             Close forever
           </Button>
@@ -305,243 +337,259 @@ function App() {
       </header>
 
       <main>
-      <Activity mode={view === View.HELP ? 'visible' : 'hidden'}>
-        <Help
-          isActive={view === View.HELP}
-          handleClose={() => { setView(View.DEFAULT); helpButtonRef.current?.focus(); }}
-        />
-      </Activity>
-
-      <Activity mode={view === View.SETTINGS ? 'visible' : 'hidden'}>
-        <Settings
-          defaultCollars={defaultCollars}
-          defaultKiloPlates={defaultKiloPlates}
-          defaultKilos={defaultKilos}
-          defaultPoundPlates={defaultPoundPlates}
-          defaultRounding={defaultRounding}
-          isActive={view === View.SETTINGS}
-          handleClose={() => { setView(View.DEFAULT); settingsButtonRef.current?.focus(); }}
-          handleSetDefaultCollars={handleSetDefaultCollars}
-          handleSetDefaultKiloPlates={handleSetDefaultKiloPlates}
-          handleSetDefaultKilos={handleSetDefaultKilos}
-          handleSetDefaultPoundPlates={handleSetDefaultPoundPlates}
-          handleSetDefaultRounding={handleSetDefaultRounding}
-        />
-      </Activity>
-
-      <Activity mode={ view === View.DEFAULT ? 'visible' : 'hidden'}>
-        <div className='subheader'>
-          <h2> Starting Values</h2>
-        </div>
-
-        <div className={`input-row ${errors.startingWeight && 'error'}`}>
-          <div className='input-container'>
-            <label htmlFor='starting-weight'> Weight </label>
-
-            <input
-              aria-describedby='starting-weight-error'
-              aria-invalid={!!errors.startingWeight}
-              className='text'
-              id='starting-weight'
-              inputMode='decimal'
-              onChange={(e) => {
-                setStartingWeight(e.target.value.replace(/[^0-9.]/g, ''));
-                setOverrideBarWeight(true);
-              }}
-              type='text'
-              value={startingWeight ? startingWeight : ''}
-            />
-          </div>
-
-          <div className='error' id='starting-weight-error'>{errors.startingWeight}</div>
-        </div>
-
-        <div className={`input-row ${errors.startingReps && 'error'}`}>
-          <div className='input-container'>
-            <label htmlFor='starting-reps'> Reps </label>
-
-            <input
-              aria-describedby='starting-reps-error'
-              aria-invalid={!!errors.startingReps}
-              className='text'
-              id='starting-reps'
-              inputMode='decimal'
-              onChange={(e) => {
-                setStartingReps(Number(e.target.value));
-                setOverrideBarWeight(true);
-              }}
-              value={startingReps ? startingReps : ''}
-            />
-          </div>
-
-          <div className='error' id='starting-reps-error'>{errors.startingReps}</div>
-        </div>
-
-        <div
-          className={`input-row border-bottom ${errors.startingRPE && 'error'}`}
-        >
-          <div className='input-container'>
-            <label htmlFor='starting-rpe'> RPE </label>
-
-            <input
-              aria-describedby='starting-rpe-error'
-              aria-invalid={!!errors.startingRPE}
-              className='text'
-              id='starting-rpe'
-              inputMode='decimal'
-              onBlur={() => setStartingRPEFocused(false)}
-              onChange={(e) => {
-                setStartingRPE(e.target.value.replace(/[^0-9.]/g, ''));
-                setOverrideBarWeight(true);
-              }}
-              onFocus={() => setStartingRPEFocused(true)}
-              value={startingRPENum ? startingRPE : ''}
-            />
-          </div>
-
-          <div className='error' id='starting-rpe-error'>{errors.startingRPE}</div>
-        </div>
-
-        <div className='subheader'>
-          <h2> Target Values</h2>
-        </div>
-
-        <div className={`input-row ${errors.targetReps && 'error'}`}>
-          <div className='input-container'>
-            <label htmlFor='target-reps'> Reps </label>
-
-            <input
-              aria-describedby='target-reps-error'
-              aria-invalid={!!errors.targetReps}
-              className='text'
-              id='target-reps'
-              inputMode='decimal'
-              onChange={(e) => {
-                setTargetReps(Number(e.target.value));
-                setOverrideBarWeight(true);
-              }}
-              value={targetReps ? targetReps : ''}
-            />
-          </div>
-
-          <div className='error' id='target-reps-error'>{errors.targetReps}</div>
-        </div>
-
-        <div className={`input-row ${errors.targetRPE && 'error'}`}>
-          <div className='input-container'>
-            <label htmlFor='target-rpe'> RPE </label>
-
-            <input
-              aria-describedby='target-rpe-error'
-              aria-invalid={!!errors.targetRPE}
-              className='text'
-              id='target-rpe'
-              inputMode='decimal'
-              onBlur={() => setTargetRPEFocused(false)}
-              onChange={(e) => {
-                setTargetRPE(e.target.value.replace(/[^0-9.]/g, ''));
-                setOverrideBarWeight(true);
-              }}
-              onFocus={() => setTargetRPEFocused(true)}
-              value={targetRPE ? targetRPE : ''}
-            />
-          </div>
-
-          <div className='error' id='target-rpe-error'>{errors.targetRPE}</div>
-        </div>
-
-        <div className='options one'>
-          <label
-            className='rounding'
-            htmlFor='rounding'
-            style={{ marginRight: '6px' }}
-          >
-            Target Weight Rounding:{' '}
-          </label>
-          <select
-            className='rounding'
-            id='rounding'
-            name='rounding'
-            onChange={(e) => { setRounding(Number(e.target.value)); setOverrideBarWeight(true); }}
-            style={{ paddingLeft: '14px' }}
-            value={rounding}
-          >
-            <option value='5'> 5.0 </option>
-            <option value='2.5'> 2.5 </option>
-            <option value='1'> 1.0 </option>
-            <option value='0.01'> 0.01 </option>
-          </select>
-        </div>
-
-        <div aria-atomic='true' className='results' role='status'>
-          <div className='target'>
-            {' '}
-            Target weight: {showTargetWeight
-              ? targetWeight.toFixed(2)
-              : '...'}{' '}
-          </div>
-          <div className='e1rm'>
-            E1RM: {showE1RM ? e1RM.toFixed(2) : '...'} x{' '}
-            <input
-              className='e1rm-multiplier text'
-              aria-label='Estimated 1 rep max multiplier'
-              inputMode='decimal'
-              maxLength={3}
-              onChange={(e) => {
-                setE1RMMultiplier(e.target.value.replace(/[^0-9.]/g, ''));
-                setBarWeightToE1RM(true);
-              }}
-              value={e1RMMultiplierNum ? e1RMMultiplierNum : ''}
-            />
-            <div className='e1rm-percent'>%</div>={' '}
-            {showE1RM ? (e1RM * (e1RMMultiplierNum / 100)).toFixed(2) : '...'}
-          </div>
-        </div>
-
-        <div className='options two'>
-          <SegmentedControl
-            aria-label='Collars'
-            color='#1568b0'
-            size='xs'
-            radius='xl'
-            value={usingCollars ? 'Collars' : 'None'}
-            onChange={(value) => setUsingCollars(value === 'Collars')}
-            data={[
-              { value: 'Collars', label: 'Collars' },
-            { value: 'None', label: 'None' },
-            ]}
+        <Activity mode={view === View.HELP ? 'visible' : 'hidden'}>
+          <Help
+            isActive={view === View.HELP}
+            handleClose={() => {
+              setView(View.DEFAULT);
+              helpButtonRef.current?.focus();
+            }}
           />
+        </Activity>
 
-          <SegmentedControl
-            aria-label='Units'
-            color='#1568b0'
-            size='xs'
-            radius='xl'
-            value={usingKilos ? 'Kilos' : 'Pounds'}
-            onChange={(value) => setUsingKilos(value === 'Kilos')}
-            data={[
-              { value: 'Kilos', label: 'Kilos' },
-            { value: 'Pounds', label: 'Pounds' },
-            ]}
+        <Activity mode={view === View.SETTINGS ? 'visible' : 'hidden'}>
+          <Settings
+            defaultCollars={defaultCollars}
+            defaultKiloPlates={defaultKiloPlates}
+            defaultKilos={defaultKilos}
+            defaultPoundPlates={defaultPoundPlates}
+            defaultRounding={defaultRounding}
+            isActive={view === View.SETTINGS}
+            handleClose={() => {
+              setView(View.DEFAULT);
+              settingsButtonRef.current?.focus();
+            }}
+            handleSetDefaultCollars={handleSetDefaultCollars}
+            handleSetDefaultKiloPlates={handleSetDefaultKiloPlates}
+            handleSetDefaultKilos={handleSetDefaultKilos}
+            handleSetDefaultPoundPlates={handleSetDefaultPoundPlates}
+            handleSetDefaultRounding={handleSetDefaultRounding}
           />
-        </div>
+        </Activity>
 
-        <BarLoader
-          actualWeight={actualWeight}
-          barWeight={barWeight}
-          plates={plates}
-          setBarWeight={setBarWeight}
-          usingCollars={usingCollars}
-          usingKilos={usingKilos}
-        />
-      </Activity>
+        <Activity mode={view === View.DEFAULT ? 'visible' : 'hidden'}>
+          <div className='subheader'>
+            <h2> Starting Values</h2>
+          </div>
+
+          <div className={`input-row ${errors.startingWeight && 'error'}`}>
+            <div className='input-container'>
+              <label htmlFor='starting-weight'> Weight </label>
+
+              <input
+                aria-describedby='starting-weight-error'
+                aria-invalid={!!errors.startingWeight}
+                className='text'
+                id='starting-weight'
+                inputMode='decimal'
+                onChange={(e) => {
+                  setStartingWeight(e.target.value.replace(/[^0-9.]/g, ''));
+                  setOverrideBarWeight(true);
+                }}
+                type='text'
+                value={startingWeight ? startingWeight : ''}
+              />
+            </div>
+
+            <div className='error' id='starting-weight-error'>
+              {errors.startingWeight}
+            </div>
+          </div>
+
+          <div className={`input-row ${errors.startingReps && 'error'}`}>
+            <div className='input-container'>
+              <label htmlFor='starting-reps'> Reps </label>
+
+              <input
+                aria-describedby='starting-reps-error'
+                aria-invalid={!!errors.startingReps}
+                className='text'
+                id='starting-reps'
+                inputMode='decimal'
+                onChange={(e) => {
+                  setStartingReps(Number(e.target.value));
+                  setOverrideBarWeight(true);
+                }}
+                value={startingReps ? startingReps : ''}
+              />
+            </div>
+
+            <div className='error' id='starting-reps-error'>
+              {errors.startingReps}
+            </div>
+          </div>
+
+          <div
+            className={`input-row border-bottom ${errors.startingRPE && 'error'}`}
+          >
+            <div className='input-container'>
+              <label htmlFor='starting-rpe'> RPE </label>
+
+              <input
+                aria-describedby='starting-rpe-error'
+                aria-invalid={!!errors.startingRPE}
+                className='text'
+                id='starting-rpe'
+                inputMode='decimal'
+                onBlur={() => setStartingRPEFocused(false)}
+                onChange={(e) => {
+                  setStartingRPE(e.target.value.replace(/[^0-9.]/g, ''));
+                  setOverrideBarWeight(true);
+                }}
+                onFocus={() => setStartingRPEFocused(true)}
+                value={startingRPENum ? startingRPE : ''}
+              />
+            </div>
+
+            <div className='error' id='starting-rpe-error'>
+              {errors.startingRPE}
+            </div>
+          </div>
+
+          <div className='subheader'>
+            <h2> Target Values</h2>
+          </div>
+
+          <div className={`input-row ${errors.targetReps && 'error'}`}>
+            <div className='input-container'>
+              <label htmlFor='target-reps'> Reps </label>
+
+              <input
+                aria-describedby='target-reps-error'
+                aria-invalid={!!errors.targetReps}
+                className='text'
+                id='target-reps'
+                inputMode='decimal'
+                onChange={(e) => {
+                  setTargetReps(Number(e.target.value));
+                  setOverrideBarWeight(true);
+                }}
+                value={targetReps ? targetReps : ''}
+              />
+            </div>
+
+            <div className='error' id='target-reps-error'>
+              {errors.targetReps}
+            </div>
+          </div>
+
+          <div className={`input-row ${errors.targetRPE && 'error'}`}>
+            <div className='input-container'>
+              <label htmlFor='target-rpe'> RPE </label>
+
+              <input
+                aria-describedby='target-rpe-error'
+                aria-invalid={!!errors.targetRPE}
+                className='text'
+                id='target-rpe'
+                inputMode='decimal'
+                onBlur={() => setTargetRPEFocused(false)}
+                onChange={(e) => {
+                  setTargetRPE(e.target.value.replace(/[^0-9.]/g, ''));
+                  setOverrideBarWeight(true);
+                }}
+                onFocus={() => setTargetRPEFocused(true)}
+                value={targetRPE ? targetRPE : ''}
+              />
+            </div>
+
+            <div className='error' id='target-rpe-error'>
+              {errors.targetRPE}
+            </div>
+          </div>
+
+          <div className='options one'>
+            <label
+              className='rounding'
+              htmlFor='rounding'
+              style={{ marginRight: '6px' }}
+            >
+              Target Weight Rounding:{' '}
+            </label>
+            <select
+              className='rounding'
+              id='rounding'
+              name='rounding'
+              onChange={(e) => {
+                setRounding(Number(e.target.value));
+                setOverrideBarWeight(true);
+              }}
+              style={{ paddingLeft: '14px' }}
+              value={rounding}
+            >
+              <option value='5'> 5.0 </option>
+              <option value='2.5'> 2.5 </option>
+              <option value='1'> 1.0 </option>
+              <option value='0.01'> 0.01 </option>
+            </select>
+          </div>
+
+          <div aria-atomic='true' className='results' role='status'>
+            <div className='target'>
+              {' '}
+              Target weight:{' '}
+              {showTargetWeight ? targetWeight.toFixed(2) : '...'}{' '}
+            </div>
+            <div className='e1rm'>
+              E1RM: {showE1RM ? e1RM.toFixed(2) : '...'} x{' '}
+              <input
+                className='e1rm-multiplier text'
+                aria-label='Estimated 1 rep max multiplier'
+                inputMode='decimal'
+                maxLength={3}
+                onChange={(e) => {
+                  setE1RMMultiplier(e.target.value.replace(/[^0-9.]/g, ''));
+                  setBarWeightToE1RM(true);
+                }}
+                value={e1RMMultiplierNum ? e1RMMultiplierNum : ''}
+              />
+              <div className='e1rm-percent'>%</div>={' '}
+              {showE1RM ? (e1RM * (e1RMMultiplierNum / 100)).toFixed(2) : '...'}
+            </div>
+          </div>
+
+          <div className='options two'>
+            <SegmentedControl
+              aria-label='Collars'
+              color='#1568b0'
+              size='xs'
+              radius='xl'
+              value={usingCollars ? 'Collars' : 'None'}
+              onChange={(value) => setUsingCollars(value === 'Collars')}
+              data={[
+                { value: 'Collars', label: 'Collars' },
+                { value: 'None', label: 'None' },
+              ]}
+            />
+
+            <SegmentedControl
+              aria-label='Units'
+              color='#1568b0'
+              size='xs'
+              radius='xl'
+              value={usingKilos ? 'Kilos' : 'Pounds'}
+              onChange={(value) => setUsingKilos(value === 'Kilos')}
+              data={[
+                { value: 'Kilos', label: 'Kilos' },
+                { value: 'Pounds', label: 'Pounds' },
+              ]}
+            />
+          </div>
+
+          <BarLoader
+            actualWeight={actualWeight}
+            barWeight={barWeight}
+            plates={plates}
+            setBarWeight={setBarWeight}
+            usingCollars={usingCollars}
+            usingKilos={usingKilos}
+          />
+        </Activity>
       </main>
 
       <footer className='footer'>
         <div className='footer-inner'>
-          <div className='attribution'>
-            © {YEAR} Zack Youngren
-          </div>
+          <div className='attribution'>© {YEAR} Zack Youngren</div>
 
           <div>
             <ActionIcon
@@ -556,20 +604,24 @@ function App() {
 
             <ActionIcon
               aria-label='Help'
-              onClick={ () => setView(view === View.HELP ? View.DEFAULT : View.HELP) }
+              onClick={() =>
+                setView(view === View.HELP ? View.DEFAULT : View.HELP)
+              }
               radius='xl'
               ref={helpButtonRef}
-              variant={ view === View.HELP ? 'white' : 'filled' }
+              variant={view === View.HELP ? 'white' : 'filled'}
             >
-              <IconHelpCircleFilled/>
+              <IconHelpCircleFilled />
             </ActionIcon>
 
             <ActionIcon
               aria-label='Settings'
-              onClick={ () => setView(view === View.SETTINGS ? View.DEFAULT : View.SETTINGS) }
+              onClick={() =>
+                setView(view === View.SETTINGS ? View.DEFAULT : View.SETTINGS)
+              }
               radius='xl'
               ref={settingsButtonRef}
-              variant={ view === View.SETTINGS ? 'white' : 'filled' }
+              variant={view === View.SETTINGS ? 'white' : 'filled'}
             >
               <IconSettingsFilled />
             </ActionIcon>

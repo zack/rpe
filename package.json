@@ -3,11 +3,6 @@
   "version": "1.0",
   "private": true,
   "type": "module",
-  "engines": {
-    "node": "24",
-    "pnpm": "please-use-npm",
-    "yarn": "please-use-npm"
-  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -20,15 +15,6 @@
     "preview": "vite preview",
     "cypress": "cypress open",
     "cypress:cli": "cypress run"
-  },
-  "lint-staged": {
-    "*.{ts,tsx,js,mjs,cts,mts}": [
-      "oxlint --fix",
-      "oxfmt"
-    ],
-    "*.{css,json,md,yml,yaml,html}": [
-      "oxfmt"
-    ]
   },
   "dependencies": {
     "@mantine/core": "^9.5.2",
@@ -67,5 +53,19 @@
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.5",
     "vite": "^8.1.5"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,mjs,cts,mts}": [
+      "oxlint --fix",
+      "oxfmt"
+    ],
+    "*.{css,json,md,yml,yaml,html}": [
+      "oxfmt"
+    ]
+  },
+  "engines": {
+    "node": "24",
+    "pnpm": "please-use-npm",
+    "yarn": "please-use-npm"
   }
 }

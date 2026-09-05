@@ -28,7 +28,7 @@ describe('RPE Calculator App E2E Tests', () => {
       cy.focused().type('9.9');
 
       cy.get('.results .target').should('contain', '240.00');
-      cy.get('input#bar-weight').should('have.value', '240.00')
+      cy.get('input#bar-weight').should('have.value', '240.00');
 
       // Set rounding to 0.01
       cy.press(Cypress.Keyboard.Keys.TAB);
@@ -37,7 +37,7 @@ describe('RPE Calculator App E2E Tests', () => {
       cy.press(Cypress.Keyboard.Keys.DOWN);
 
       cy.get('.results .target').should('contain', '242.47');
-      cy.get('input#bar-weight').should('have.value', '242.47')
+      cy.get('input#bar-weight').should('have.value', '242.47');
       cy.get('.e1rm').should('contain', '294.58');
 
       // E1RM Percentage
@@ -45,7 +45,7 @@ describe('RPE Calculator App E2E Tests', () => {
       cy.focused().type('77');
 
       cy.get('.e1rm').should('contain', '226.83');
-      cy.get('input#bar-weight').should('have.value', '226.83')
+      cy.get('input#bar-weight').should('have.value', '226.83');
 
       // Bar loader
       cy.get('.bar-loader .plates .plate.l55').should('exist');

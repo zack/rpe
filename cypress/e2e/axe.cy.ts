@@ -11,19 +11,19 @@ describe('aXe Tests', () => {
   });
 
   it('should pass the homepage', () => {
-    cy.injectAxe()
-    cy.checkA11y()
+    cy.injectAxe();
+    cy.checkA11y();
   });
 
   it('should pass the settings page', () => {
     cy.get('button[aria-label="Settings"]').click();
-    cy.injectAxe()
-    cy.checkA11y()
+    cy.injectAxe();
+    cy.checkA11y();
   });
 
   it('should pass the help page', () => {
     cy.get('button[aria-label="Help"]').click();
-    cy.injectAxe()
-    cy.checkA11y()
+    cy.injectAxe();
+    cy.checkA11y();
   });
 });
