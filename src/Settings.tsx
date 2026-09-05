@@ -50,12 +50,10 @@ const Settings = ({
     <>
       <div className='settings'>
         <h2 ref={headingRef} tabIndex={-1}>
-          {' '}
-          Defaults{' '}
+          Defaults
         </h2>
 
         <div className='settings-explanation'>
-          {' '}
           These are the settings that will bet set every time you open the
           application.
         </div>
@@ -123,18 +121,17 @@ const Settings = ({
               }}
               value={defaultRounding}
             >
-              <option value='5'> 5.0 </option>
-              <option value='2.5'> 2.5 </option>
-              <option value='1'> 1.0 </option>
-              <option value='0.01'> 0.01 </option>
+              <option value='5'>5.0</option>
+              <option value='2.5'>2.5</option>
+              <option value='1'>1.0</option>
+              <option value='0.01'>0.01</option>
             </NativeSelect>
           </div>
         </div>
 
-        <h2> Plate Choices </h2>
+        <h2>Plate Choices</h2>
 
         <div>
-          {' '}
           These are the plates that the plate loader will consider available.
           Select the plates that you have access to in your space.
         </div>
