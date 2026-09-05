@@ -333,7 +333,7 @@ function App() {
       </Modal>
 
       <header className='header'>
-        <h1> RPE Calculator </h1>
+        <h1>RPE Calculator</h1>
       </header>
 
       <main>
@@ -369,12 +369,12 @@ function App() {
 
         <Activity mode={view === View.DEFAULT ? 'visible' : 'hidden'}>
           <div className='subheader'>
-            <h2> Starting Values</h2>
+            <h2>Starting Values</h2>
           </div>
 
           <div className={`input-row ${errors.startingWeight && 'error'}`}>
             <div className='input-container'>
-              <label htmlFor='starting-weight'> Weight </label>
+              <label htmlFor='starting-weight'>Weight</label>
 
               <input
                 aria-describedby='starting-weight-error'
@@ -398,7 +398,7 @@ function App() {
 
           <div className={`input-row ${errors.startingReps && 'error'}`}>
             <div className='input-container'>
-              <label htmlFor='starting-reps'> Reps </label>
+              <label htmlFor='starting-reps'>Reps</label>
 
               <input
                 aria-describedby='starting-reps-error'
@@ -423,7 +423,7 @@ function App() {
             className={`input-row border-bottom ${errors.startingRPE && 'error'}`}
           >
             <div className='input-container'>
-              <label htmlFor='starting-rpe'> RPE </label>
+              <label htmlFor='starting-rpe'>RPE</label>
 
               <input
                 aria-describedby='starting-rpe-error'
@@ -447,12 +447,12 @@ function App() {
           </div>
 
           <div className='subheader'>
-            <h2> Target Values</h2>
+            <h2>Target Values</h2>
           </div>
 
           <div className={`input-row ${errors.targetReps && 'error'}`}>
             <div className='input-container'>
-              <label htmlFor='target-reps'> Reps </label>
+              <label htmlFor='target-reps'>Reps</label>
 
               <input
                 aria-describedby='target-reps-error'
@@ -475,7 +475,7 @@ function App() {
 
           <div className={`input-row ${errors.targetRPE && 'error'}`}>
             <div className='input-container'>
-              <label htmlFor='target-rpe'> RPE </label>
+              <label htmlFor='target-rpe'>RPE</label>
 
               <input
                 aria-describedby='target-rpe-error'
@@ -504,7 +504,7 @@ function App() {
               htmlFor='rounding'
               style={{ marginRight: '6px' }}
             >
-              Target Weight Rounding:{' '}
+              Target Weight Rounding:
             </label>
             <select
               className='rounding'
@@ -517,18 +517,17 @@ function App() {
               style={{ paddingLeft: '14px' }}
               value={rounding}
             >
-              <option value='5'> 5.0 </option>
-              <option value='2.5'> 2.5 </option>
-              <option value='1'> 1.0 </option>
-              <option value='0.01'> 0.01 </option>
+              <option value='5'>5.0</option>
+              <option value='2.5'>2.5</option>
+              <option value='1'>1.0</option>
+              <option value='0.01'>0.01</option>
             </select>
           </div>
 
           <div aria-atomic='true' className='results' role='status'>
             <div className='target'>
-              {' '}
               Target weight:{' '}
-              {showTargetWeight ? targetWeight.toFixed(2) : '...'}{' '}
+              {showTargetWeight ? targetWeight.toFixed(2) : '...'}
             </div>
             <div className='e1rm'>
               E1RM: {showE1RM ? e1RM.toFixed(2) : '...'} x{' '}
