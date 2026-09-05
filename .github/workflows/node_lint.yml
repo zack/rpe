@@ -1,5 +1,5 @@
-name: 'Node Linter'
-run-name: ${{ github.actor }} is linting Typescript
+name: 'Lint and Format'
+run-name: ${{ github.actor }} is linting and checking formatting
 on:
   pull_request:
 jobs:
@@ -14,3 +14,4 @@ jobs:
           node-version: lts/jod
       - run: npm ci --legacy-peer-deps
       - run: npm run lint
+      - run: npm run format:check
