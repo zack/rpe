@@ -5,13 +5,9 @@ import {
   SegmentedControl,
   Stack,
 } from '@mantine/core';
-
-import {
-  PLATE_SIZES_KILOS,
-  PLATE_SIZES_POUNDS
-} from './constants.ts';
-
 import { useEffect, useRef } from 'react';
+
+import { PLATE_SIZES_KILOS, PLATE_SIZES_POUNDS } from './constants.ts';
 
 type SettingsProps = {
   defaultCollars: boolean;
@@ -20,13 +16,13 @@ type SettingsProps = {
   defaultPoundPlates: number[];
   defaultRounding: number;
   handleClose: () => void;
-  handleSetDefaultCollars: (value: boolean) => void,
-  handleSetDefaultKiloPlates: (value: string[]) => void,
-  handleSetDefaultKilos: (value: boolean) => void,
-  handleSetDefaultPoundPlates: (value: string[]) => void,
-  handleSetDefaultRounding: (value: number) => void,
+  handleSetDefaultCollars: (value: boolean) => void;
+  handleSetDefaultKiloPlates: (value: string[]) => void;
+  handleSetDefaultKilos: (value: boolean) => void;
+  handleSetDefaultPoundPlates: (value: string[]) => void;
+  handleSetDefaultRounding: (value: number) => void;
   isActive: boolean;
-}
+};
 
 const Settings = ({
   defaultCollars,
@@ -41,7 +37,7 @@ const Settings = ({
   handleSetDefaultPoundPlates,
   handleSetDefaultRounding,
   isActive,
-} : SettingsProps) => {
+}: SettingsProps) => {
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
@@ -52,12 +48,19 @@ const Settings = ({
 
   return (
     <>
-      <div className="settings">
-        <h2 ref={headingRef} tabIndex={-1}> Defaults </h2>
+      <div className='settings'>
+        <h2 ref={headingRef} tabIndex={-1}>
+          {' '}
+          Defaults{' '}
+        </h2>
 
-        <div className="settings-explanation"> These are the settings that will bet set every time you open the application.</div>
+        <div className='settings-explanation'>
+          {' '}
+          These are the settings that will bet set every time you open the
+          application.
+        </div>
 
-        <div className="settings-defaults">
+        <div className='settings-defaults'>
           <div>
             <label
               className='label'
@@ -115,7 +118,9 @@ const Settings = ({
               id='default-rounding'
               size='xs'
               name='rounding'
-              onChange={(e) => { handleSetDefaultRounding(Number(e.target.value)); }}
+              onChange={(e) => {
+                handleSetDefaultRounding(Number(e.target.value));
+              }}
               value={defaultRounding}
             >
               <option value='5'> 5.0 </option>
@@ -128,42 +133,51 @@ const Settings = ({
 
         <h2> Plate Choices </h2>
 
-        <div> These are the plates that the plate loader will consider available. Select the plates that you have access to in your space.</div>
+        <div>
+          {' '}
+          These are the plates that the plate loader will consider available.
+          Select the plates that you have access to in your space.
+        </div>
 
-        <div className="plate-choices">
+        <div className='plate-choices'>
           <Checkbox.Group
-            label="Kilo plates"
+            label='Kilo plates'
             onChange={handleSetDefaultKiloPlates}
             value={defaultKiloPlates.map((plate: number) => `${plate}`)}
           >
             <Stack gap={'xs'}>
               {PLATE_SIZES_KILOS.map((plate) => (
-                <Checkbox key={plate} className='checkbox kilos' value={`${plate}`} label={`${plate}`} />
+                <Checkbox
+                  key={plate}
+                  className='checkbox kilos'
+                  value={`${plate}`}
+                  label={`${plate}`}
+                />
               ))}
             </Stack>
           </Checkbox.Group>
 
           <Checkbox.Group
-            label="Pound plates"
+            label='Pound plates'
             onChange={handleSetDefaultPoundPlates}
             value={defaultPoundPlates.map((plate: number) => `${plate}`)}
           >
             <Stack gap={'xs'}>
               {PLATE_SIZES_POUNDS.map((plate) => (
-                <Checkbox key={plate} className='checkbox pounds' value={`${plate}`} label={`${plate}`} />
+                <Checkbox
+                  key={plate}
+                  className='checkbox pounds'
+                  value={`${plate}`}
+                  label={`${plate}`}
+                />
               ))}
             </Stack>
           </Checkbox.Group>
-
         </div>
       </div>
 
-      <div className="help-actions">
-        <Button
-          className="help-close"
-          color='#1779CE'
-          onClick={handleClose}
-        >
+      <div className='help-actions'>
+        <Button className='help-close' color='#1779CE' onClick={handleClose}>
           Close settings
         </Button>
       </div>

@@ -5,7 +5,7 @@ type BarLoaderProps = {
   setBarWeight: React.Dispatch<React.SetStateAction<string>>;
   usingCollars: boolean;
   usingKilos: boolean;
-}
+};
 const BarLoader = ({
   actualWeight,
   barWeight,
@@ -13,7 +13,7 @@ const BarLoader = ({
   setBarWeight,
   usingCollars,
   usingKilos,
-}: BarLoaderProps ) => {
+}: BarLoaderProps) => {
   let actualBarWeight;
   if (usingKilos && usingCollars) {
     actualBarWeight = Math.max(25, actualWeight);
@@ -73,9 +73,8 @@ const BarLoader = ({
         Not all weights can be made. Bar loader will always round down to the
         next possible weight.
       </div>
-    </
-    >
+    </>
   );
-}
+};
 
 export default BarLoader;
