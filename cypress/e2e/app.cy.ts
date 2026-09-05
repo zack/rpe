@@ -14,7 +14,7 @@ describe('RPE Calculator App E2E Tests', () => {
     cy.get('h1').contains('RPE Calculator');
   });
 
-  describe.only('RPE Calculations and Results', () => {
+  describe('RPE Calculations and Results', () => {
     it('should calculate E1RM and target weight correctly', () => {
       cy.press(Cypress.Keyboard.Keys.TAB);
       cy.focused().type('234.5');
