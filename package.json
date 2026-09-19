@@ -39,7 +39,7 @@
     "cypress-axe": "^1.7.0",
     "husky": "^9.1.7",
     "lint-staged": "^17.5.0",
-    "oxfmt": "^0.67.0",
+    "oxfmt": "^0.68.0",
     "oxlint": "^1.81.0",
     "tsx": "^4.23.13",
     "typescript": "~5.9.3",
