@@ -17,7 +17,7 @@
     "cypress:cli": "cypress run"
   },
   "dependencies": {
-    "@mantine/core": "^9.6.1",
+    "@mantine/core": "^9.6.2",
     "@mantine/hooks": "^9.5.2",
     "@tabler/icons-react": "^3.46.0",
     "@types/react": "19.2.18",
